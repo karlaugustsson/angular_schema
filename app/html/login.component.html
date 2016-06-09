@@ -1,0 +1,27 @@
+		<div class="row">
+		<div id="username_container" class="col-xs-12">
+			<form class="form-inline" (ngSubmit)="onSubmit()" #userForm="ngForm">
+			  <div class="form-group">
+			    <label for="email">Email:</label>
+	
+				<input id="emailField" type="email" class="form-control" placeholder="Enter a your email" [(ngModel)]="user.email" required
+				ngControl="email"  #email="ngForm">
+			    
+			    <label for="password">Pasword:</label>
+				
+				<input id="passwordField" type="password" class="form-control" placeholder="Enter password" [(ngModel)]="user.password" required
+				ngControl="password"  #password="ngForm" >
+			  </div>
+			<button type="submit" class="btn btn-primary">Login</button>
+            
+        <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+          Email invalid
+        </div>
+        <div [hidden]="!user_exist" class="alert alert-danger">
+          Wrong Credentials
+        </div>
+        <div [hidden]="!error_messages" class="alert alert-danger">
+		<p *ngFor="let error_message of error_messages">{{error_message}}</p>
+        </div>
+			</form>		
+		</div>
