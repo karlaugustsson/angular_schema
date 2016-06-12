@@ -9,17 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var UserService = (function () {
-    function UserService() {
+var AdminActionsComponent = (function () {
+    function AdminActionsComponent() {
     }
-    UserService.prototype.get_user_action_routes = function () {
-        return false;
-    };
-    UserService = __decorate([
-        core_1.Injectable(), 
+    AdminActionsComponent = __decorate([
+        core_1.Component({
+            selector: "admin-actions",
+            templateUrl: "/app/html/user-actions.component.html"
+        }), 
         __metadata('design:paramtypes', [])
-    ], UserService);
-    return UserService;
+    ], AdminActionsComponent);
+    return AdminActionsComponent;
 }());
-exports.UserService = UserService;
-//# sourceMappingURL=user.service.js.map
+exports.AdminActionsComponent = AdminActionsComponent;
+//# sourceMappingURL=admin-actions.component.js.map

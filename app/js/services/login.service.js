@@ -10,8 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_1 = require('@angular/http');
-var router_1 = require('@angular/router');
+var router_deprecated_1 = require('@angular/router-deprecated');
 var Rx_1 = require('rxjs/Rx');
+var api_service_1 = require("./api.service");
 require('rxjs/add/observable/throw');
 require('rxjs/add/operator/toPromise');
 require('rxjs/add/operator/catch');
@@ -20,24 +21,29 @@ require('rxjs/add/operator/distinctUntilChanged');
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/switchMap');
 var LoginService = (function () {
-    function LoginService(_http, _router) {
+    function LoginService(_http, _router, api_service) {
+        var _this = this;
         this._http = _http;
         this._router = _router;
-        this.login_url = "http://localhost:8000/api/v1/authorize";
+        this.api_service = api_service;
+        this.email = "karl.augustsson@gmail.com";
+        this.password = "password";
         this.authorized = false;
+        this.api_service.getApiRoute("Authorize").then(function (route) { return _this.login_url = route; });
+        setTimeout(function () { }, 2000);
     }
     LoginService.prototype.authorize = function (email, password) {
         var _this = this;
         if (email === void 0) { email = null; }
         if (password === void 0) { password = null; }
+        console.log(this.login_url);
         if (this.password && this.email) {
             email = this.email;
             password = this.password;
         }
-        var headers = new http_1.Headers({ 'Content-Type': 'application/json', "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjQsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdDo4MDAwXC9hcGlcL3YxXC9sb2dpbiIsImlhdCI6MTQ2NDY4MjA4MywiZXhwIjoxNDY0Njg1NjgzLCJuYmYiOjE0NjQ2ODIwODMsImp0aSI6ImVjMzczOGJiNzNiNmE4MGEzYjJmZjc0ODkxODJjZGVjIn0.3Q6lQ5hcOsB2YML-AsO8gvuOxJbgg-eaNAiR6Tb072U" });
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
-        //headers.append('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhb G ciOiJIU zI1NiJ9.eyJzdWIiOjQsImlzcyI6Imh0dHA6XC9cL2xvY2FsaG9zdDo4MDAwXC9hcGlcL3YxXC9sb2dpbiIsImlhdCI6MTQ2NDY4MjA4MywiZXhwIjoxNDY0Njg1NjgzLCJuYmYiOjE0NjQ2ODIwODMsImp0aSI6ImVjMzczOGJiNzNiNmE4MGEzYjJmZjc0ODkxODJjZGVjIn0.3Q6lQ5hcOsB2YML-AsO8gvuOxJbgg-eaNAiR6Tb072U');
-        return this._http.post(this.login_url, JSON.stringify({ 'email': email, "password": password }), options).toPromise().then(function (data) { return _this.handleSuccess(data, email, password); }).catch(this.handleError);
+        return this._http.post(this.login_url.server_url + this.login_url.url, JSON.stringify({ 'email': email, "password": password }), options).toPromise().then(function (data) { return _this.handleSuccess(data, email, password); }).catch(this.handleError);
     };
     LoginService.prototype.get_authtoken = function () {
         this.isAuthorized();
@@ -49,6 +55,9 @@ var LoginService = (function () {
         }
     };
     LoginService.prototype.handleError = function (error) {
+        if (error._body == undefined) {
+            return;
+        }
         var errMsg = JSON.parse(error._body).errors;
         return Rx_1.Observable.throw(errMsg);
     };
@@ -57,12 +66,12 @@ var LoginService = (function () {
         this.email = email;
         this.password = password;
         this.authorized = true;
-        this._router.navigate(["/dashboard"]);
         return result.token;
+        //return this._router.navigate(["Dashboard"]);
     };
     LoginService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http, router_1.Router])
+        __metadata('design:paramtypes', [http_1.Http, router_deprecated_1.Router, api_service_1.ApiService])
     ], LoginService);
     return LoginService;
 }());

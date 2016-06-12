@@ -9,29 +9,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var router_1 = require('@angular/router');
+var router_deprecated_1 = require('@angular/router-deprecated');
 var header_component_1 = require("./header.component");
 var footer_component_1 = require("./footer.component");
 var login_component_1 = require("./login.component");
 var dashboard_component_1 = require("./dashboard.component");
+var api_service_1 = require("../services/api.service");
+var schema_component_1 = require("./schema.component");
 var AppComponent = (function () {
-    function AppComponent(router) {
-        this.router = router;
+    function AppComponent(api_service) {
+        this.api_service = api_service;
     }
-    AppComponent.prototype.ngOnInit = function () {
-        this.router.navigate(['/login']);
-    };
     AppComponent = __decorate([
+        router_deprecated_1.RouteConfig([
+            { path: '/login', name: "Login", component: login_component_1.LoginComponent, useAsDefault: true },
+            { path: '/dashboard', name: "Dashboard", component: dashboard_component_1.DashBoardComponent },
+            { path: '/schemas', name: "Schemas", component: schema_component_1.SchemaComponent },
+        ]),
         core_1.Component({
             selector: "my-app",
             templateUrl: "app/html/app.component.html",
-            directives: [router_1.ROUTER_DIRECTIVES, header_component_1.HeaderComponent, footer_component_1.FooterComponent],
-        }),
-        router_1.Routes([
-            { path: '/login', component: login_component_1.LoginComponent },
-            { path: '/dashboard', component: dashboard_component_1.DashBoardComponent }
-        ]), 
-        __metadata('design:paramtypes', [router_1.Router])
+            directives: [router_deprecated_1.ROUTER_DIRECTIVES, header_component_1.HeaderComponent, footer_component_1.FooterComponent],
+            providers: []
+        }), 
+        __metadata('design:paramtypes', [api_service_1.ApiService])
     ], AppComponent);
     return AppComponent;
 }());

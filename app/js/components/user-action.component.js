@@ -9,17 +9,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var UserService = (function () {
-    function UserService() {
+var UserActionComponent = (function () {
+    function UserActionComponent() {
     }
-    UserService.prototype.get_user_action_routes = function () {
-        return false;
-    };
-    UserService = __decorate([
-        core_1.Injectable(), 
+    UserActionComponent = __decorate([
+        core_1.Component(), 
         __metadata('design:paramtypes', [])
-    ], UserService);
-    return UserService;
+    ], UserActionComponent);
+    return UserActionComponent;
 }());
-exports.UserService = UserService;
-//# sourceMappingURL=user.service.js.map
+exports.UserActionComponent = UserActionComponent;
+//# sourceMappingURL=user-action.component.js.map

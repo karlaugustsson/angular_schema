@@ -1,12 +1,11 @@
 import {Component , Input , Output , EventEmitter , OnInit} from "@angular/core";
 import {User} from "../classes/user";
-import { Routes, ROUTER_DIRECTIVES,Router } from '@angular/router';
+import { Router} from '@angular/router-deprecated';
 import { LoginService } from "../services/login.service";
 
 @Component({
 	selector: "login",
 	templateUrl: "app/html/login.component.html",
-	directives:[ROUTER_DIRECTIVES]
 
 })
 
@@ -23,10 +22,15 @@ export class LoginComponent{
 		this.error_messages = null;
 	
 			this.submitted = true;
-			this._loginService.authorize(this.user.email, this.user.password).then(loginResponse => this.handle_login_response(loginResponse));
+			this._loginService.authorize(this.user.email, this.user.password).then(errorResponse => this.handle_login_response(errorResponse));
 	}
 	handle_login_response(loginResponse){
-		if(loginResponse.error){
+		if(!loginResponse){
+			return;
+		}
+	
+		if(loginResponse.error != null){
+			
 			this.error_messages = loginResponse.error;
 		}
 

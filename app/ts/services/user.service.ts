@@ -1,10 +1,13 @@
 import { Injectable } from "@angular/core";
-import { Observable } from 'rxjs/Observable';
 import { User } from "../classes/user";
-import { SocketService } from "../services/socket.service";
 import { LoginService } from "../services/login.service";
+import { ROUTE } from "../classes/route";
 @Injectable()
 
 export class UserService {
 
+
+	get_user_action_routes() {
+		return false;
+	}
 }

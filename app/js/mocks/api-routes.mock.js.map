@@ -1,0 +1,1 @@
+{"version":3,"file":"api-routes.mock.js","sourceRoot":"","sources":["../../ts/mocks/api-routes.mock.ts"],"names":[],"mappings":";AAAA,sBAAsB,kBAAkB,CAAC,CAAA;AACzC,2IAA2I;AAChI,qBAAa,GAAiB;IACxC,IAAI,aAAK,CAAC,WAAW,EAAE,WAAW,CAAC;IACnC,IAAI,aAAK,CAAC,SAAS,EAAE,cAAc,EAAE,CAAC,MAAM,EAAE,OAAO,EAAE,QAAQ,CAAC,CAAC;CACjE,CAAA"}

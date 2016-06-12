@@ -9,17 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var UserService = (function () {
-    function UserService() {
+var api_routes_mock_1 = require("../mocks/api-routes.mock");
+var ApiService = (function () {
+    function ApiService() {
     }
-    UserService.prototype.get_user_action_routes = function () {
-        return false;
+    ApiService.prototype.getApiRoutes = function () {
+        return Promise.resolve(api_routes_mock_1.ApiRoutesMock);
     };
-    UserService = __decorate([
+    ApiService.prototype.getApiRoute = function (name) {
+        return this.getApiRoutes().then(function (routes) { return routes.filter(function (route) { return route.name === name; })[0]; });
+    };
+    ApiService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])
-    ], UserService);
-    return UserService;
+    ], ApiService);
+    return ApiService;
 }());
-exports.UserService = UserService;
-//# sourceMappingURL=user.service.js.map
+exports.ApiService = ApiService;
+//# sourceMappingURL=api.service.js.map

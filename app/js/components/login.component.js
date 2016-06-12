@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var user_1 = require("../classes/user");
-var router_1 = require('@angular/router');
+var router_deprecated_1 = require('@angular/router-deprecated');
 var login_service_1 = require("../services/login.service");
 var LoginComponent = (function () {
     function LoginComponent(_loginService, _router) {
@@ -25,10 +25,13 @@ var LoginComponent = (function () {
         var _this = this;
         this.error_messages = null;
         this.submitted = true;
-        this._loginService.authorize(this.user.email, this.user.password).then(function (loginResponse) { return _this.handle_login_response(loginResponse); });
+        this._loginService.authorize(this.user.email, this.user.password).then(function (errorResponse) { return _this.handle_login_response(errorResponse); });
     };
     LoginComponent.prototype.handle_login_response = function (loginResponse) {
-        if (loginResponse.error) {
+        if (!loginResponse) {
+            return;
+        }
+        if (loginResponse.error != null) {
             this.error_messages = loginResponse.error;
         }
     };
@@ -36,9 +39,8 @@ var LoginComponent = (function () {
         core_1.Component({
             selector: "login",
             templateUrl: "app/html/login.component.html",
-            directives: [router_1.ROUTER_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [login_service_1.LoginService, router_1.Router])
+        __metadata('design:paramtypes', [login_service_1.LoginService, router_deprecated_1.Router])
     ], LoginComponent);
     return LoginComponent;
 }());

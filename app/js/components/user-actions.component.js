@@ -9,17 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var UserService = (function () {
-    function UserService() {
+var user_service_1 = require("../services/user.service");
+var UserActionsComponent = (function () {
+    function UserActionsComponent(_userService) {
+        this._userService = _userService;
     }
-    UserService.prototype.get_user_action_routes = function () {
-        return false;
+    UserActionsComponent.prototype.ngOnInit = function () {
+        //this.getUserActionLinks()
     };
-    UserService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
-    ], UserService);
-    return UserService;
+    UserActionsComponent = __decorate([
+        core_1.Component({
+            selector: "user-actions",
+            templateUrl: "/app/html/user-actions.component.html",
+        }), 
+        __metadata('design:paramtypes', [user_service_1.UserService])
+    ], UserActionsComponent);
+    return UserActionsComponent;
 }());
-exports.UserService = UserService;
-//# sourceMappingURL=user.service.js.map
+exports.UserActionsComponent = UserActionsComponent;
+//# sourceMappingURL=user-actions.component.js.map

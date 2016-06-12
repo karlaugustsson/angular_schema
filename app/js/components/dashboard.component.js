@@ -10,6 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var login_service_1 = require("../services/login.service");
+var admin_actions_component_1 = require("./admin-actions.component");
+var user_actions_component_1 = require("./user-actions.component");
 var DashBoardComponent = (function () {
     function DashBoardComponent(_loginService) {
         this._loginService = _loginService;
@@ -18,12 +20,13 @@ var DashBoardComponent = (function () {
         this.auth();
     };
     DashBoardComponent.prototype.auth = function () {
-        this._loginService.authorize;
+        this._loginService.authorize();
     };
     DashBoardComponent = __decorate([
         core_1.Component({
             selector: "dashboard",
-            templateUrl: "app/html/dashboard.component.html"
+            templateUrl: "app/html/dashboard.component.html",
+            directives: [user_actions_component_1.UserActionsComponent, admin_actions_component_1.AdminActionsComponent]
         }), 
         __metadata('design:paramtypes', [login_service_1.LoginService])
     ], DashBoardComponent);

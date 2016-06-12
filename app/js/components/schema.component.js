@@ -9,17 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var UserService = (function () {
-    function UserService() {
+var schema_service_1 = require("../services/schema.service");
+var SchemaComponent = (function () {
+    function SchemaComponent(_schemaService) {
+        this._schemaService = _schemaService;
     }
-    UserService.prototype.get_user_action_routes = function () {
-        return false;
+    SchemaComponent.prototype.ngOnInit = function () {
+        this.getSchemas();
     };
-    UserService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
-    ], UserService);
-    return UserService;
+    SchemaComponent.prototype.getSchemas = function () {
+        this._schemaService.getSchemas();
+    };
+    SchemaComponent = __decorate([
+        core_1.Component({
+            selector: "schema",
+            templateUrl: "app/html/schema.component.html",
+        }), 
+        __metadata('design:paramtypes', [schema_service_1.SchemaService])
+    ], SchemaComponent);
+    return SchemaComponent;
 }());
-exports.UserService = UserService;
-//# sourceMappingURL=user.service.js.map
+exports.SchemaComponent = SchemaComponent;
+//# sourceMappingURL=schema.component.js.map
