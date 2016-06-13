@@ -10,24 +10,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var schema_service_1 = require("../services/schema.service");
-var SchemaComponent = (function () {
-    function SchemaComponent(_schemaService) {
+var user_actions_component_1 = require("./user-actions.component");
+var UserSchemaComponent = (function () {
+    function UserSchemaComponent(_schemaService) {
         this._schemaService = _schemaService;
     }
-    SchemaComponent.prototype.ngOnInit = function () {
-        this.getSchemas();
+    UserSchemaComponent.prototype.ngOnInit = function () {
+        this.getUserSubscribedSchemas();
     };
-    SchemaComponent.prototype.getSchemas = function () {
-        this._schemaService.getSchemas();
+    UserSchemaComponent.prototype.getUserSubscribedSchemas = function () {
+        //this._schemaService.getUserSubscribedSchemas().then((response) => {this.process_response(response)});
     };
-    SchemaComponent = __decorate([
+    UserSchemaComponent.prototype.process_response = function (response) {
+        if (response) {
+            if (response.error) {
+                this.error = response.error;
+            }
+            else {
+                this.schemas = response;
+            }
+        }
+        return false;
+    };
+    UserSchemaComponent = __decorate([
         core_1.Component({
             selector: "schema",
-            templateUrl: "app/html/schema.component.html",
+            templateUrl: "app/html/user-schema.component.html",
+            directives: [user_actions_component_1.UserActionsComponent]
         }), 
         __metadata('design:paramtypes', [schema_service_1.SchemaService])
-    ], SchemaComponent);
-    return SchemaComponent;
+    ], UserSchemaComponent);
+    return UserSchemaComponent;
 }());
-exports.SchemaComponent = SchemaComponent;
+exports.UserSchemaComponent = UserSchemaComponent;
 //# sourceMappingURL=schema.component.js.map

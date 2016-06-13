@@ -19,6 +19,9 @@ var ApiService = (function () {
     ApiService.prototype.getApiRoute = function (name) {
         return this.getApiRoutes().then(function (routes) { return routes.filter(function (route) { return route.name === name; })[0]; });
     };
+    ApiService.prototype.getAuthToken = function () {
+        //return this._login_service.get_authtoken();
+    };
     ApiService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])

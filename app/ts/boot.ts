@@ -6,5 +6,6 @@ import {ROUTER_PROVIDERS} from '@angular/router-deprecated';
 import {Http, HTTP_PROVIDERS,} from '@angular/http';
 import { UserService } from "./services/user.service";
 import {SchemaService} from "./services/schema.service";
+import {HttpService} from "./services/http.service";
 
-bootstrap(AppComponent, [ROUTER_PROVIDERS, ApiService, LoginService, Http, HTTP_PROVIDERS, UserService , SchemaService]);			
+bootstrap(AppComponent, [ROUTER_PROVIDERS, ApiService, LoginService, Http, HTTP_PROVIDERS, UserService , SchemaService,HttpService]);			

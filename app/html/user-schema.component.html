@@ -1,0 +1,44 @@
+<user-actions></user-actions>
+<div class="row">
+	<div class="col-xs-12">
+		<div id="errorBox" class="alert alert-info" [hidden]="!error" >
+		<p>{{error}}</p>
+		
+		</div>	
+			</div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+		<h2>My Schemas</h2>
+		<table id="schema_subscriptions" class="table table-striped"[hidden]="!schemas">
+			<thead>
+				<tr>
+
+					<td>Schema</td>
+					<td>Last updated</td>
+					<td>Actions</td>
+
+				</tr>
+			</thead>
+			<tbody>
+
+				<tr *ngFor="let schema of schemas">
+					<td>
+						<a href="schemas/{{schema.id}}">{{schema.name}}</a>
+					</td>
+
+					<td>
+						<p>
+							{{schema.updated_at ? schema.updated_at : "no updates"}}
+						</p>
+					</td>
+
+					<td>
+						<a class="btn-xs btn-danger"href="">unsubscribe</a>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>	
+	</div>
+</div>

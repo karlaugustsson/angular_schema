@@ -15,7 +15,7 @@ var AdminActionsComponent = (function () {
     AdminActionsComponent = __decorate([
         core_1.Component({
             selector: "admin-actions",
-            templateUrl: "/app/html/user-actions.component.html"
+            templateUrl: "/app/html/admin-actions.component.html"
         }), 
         __metadata('design:paramtypes', [])
     ], AdminActionsComponent);

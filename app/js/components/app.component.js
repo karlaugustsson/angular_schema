@@ -16,6 +16,7 @@ var login_component_1 = require("./login.component");
 var dashboard_component_1 = require("./dashboard.component");
 var api_service_1 = require("../services/api.service");
 var schema_component_1 = require("./schema.component");
+var available_schemas_component_1 = require("./available-schemas.component");
 var AppComponent = (function () {
     function AppComponent(api_service) {
         this.api_service = api_service;
@@ -24,7 +25,8 @@ var AppComponent = (function () {
         router_deprecated_1.RouteConfig([
             { path: '/login', name: "Login", component: login_component_1.LoginComponent, useAsDefault: true },
             { path: '/dashboard', name: "Dashboard", component: dashboard_component_1.DashBoardComponent },
-            { path: '/schemas', name: "Schemas", component: schema_component_1.SchemaComponent },
+            { path: '/user-schemas', name: "User Schema Subscriptions", component: schema_component_1.UserSchemaComponent },
+            { path: '/available-schemas', name: "Available Schemas", component: available_schemas_component_1.AvailableSchemasComponent },
         ]),
         core_1.Component({
             selector: "my-app",

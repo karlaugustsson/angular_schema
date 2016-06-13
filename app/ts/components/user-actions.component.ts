@@ -1,7 +1,7 @@
 import { Component , OnInit } from "@angular/core";
 import {UserService} from "../services/user.service"
 import { RouteConfig , ROUTER_DIRECTIVES} from '@angular/router-deprecated';
-import {SchemaComponent} from "./schema.component";
+import {UserSchemaComponent} from "./schema.component";
 @Component({
 	selector: "user-actions",
 	templateUrl:"/app/html/user-actions.component.html",
