@@ -53,15 +53,13 @@ export class LoginService{
 	}
 
 	handleSuccess(data,email,password){
-		console.log(data);
 		let result = data.json();
 		
 		this.email = email;
 		this.password = password;
 		this.authorized = true;
 	
-		return result.token;
-		//return this._router.navigate(["Dashboard"]);
+		return {key:"Authorization" ,value: "Bearer " + result.token };
 	}
 
 }

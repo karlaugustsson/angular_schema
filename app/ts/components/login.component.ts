@@ -28,11 +28,12 @@ export class LoginComponent{
 		if(!loginResponse){
 			return;
 		}
-	
+		
 		if(loginResponse.error != null){
 			
 			this.error_messages = loginResponse.error;
 		}
+		this._router.navigate(["Dashboard"])
 
 	}
 

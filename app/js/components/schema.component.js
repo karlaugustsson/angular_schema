@@ -19,7 +19,8 @@ var UserSchemaComponent = (function () {
         this.getUserSubscribedSchemas();
     };
     UserSchemaComponent.prototype.getUserSubscribedSchemas = function () {
-        //this._schemaService.getUserSubscribedSchemas().then((response) => {this.process_response(response)});
+        var _this = this;
+        return this._schemaService.getUserSubscribedSchemas().then(function (response) { return _this.process_response(response); });
     };
     UserSchemaComponent.prototype.process_response = function (response) {
         if (response) {

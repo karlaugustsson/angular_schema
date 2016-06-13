@@ -19,7 +19,7 @@ export class UserSchemaComponent implements OnInit{
 	}
 
 	getUserSubscribedSchemas(){
-		//this._schemaService.getUserSubscribedSchemas().then((response) => {this.process_response(response)});
+		return this._schemaService.getUserSubscribedSchemas().then((response) => {return this.process_response(response)});
 	}
 
 	process_response(response){

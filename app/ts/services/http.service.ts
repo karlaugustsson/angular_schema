@@ -16,12 +16,22 @@ export class HttpService{
 		this.headers = new Headers({ 'Content-Type': 'application/json' });
 	}
 
-	getRequest(urlName,additional_headers = null){
+	getRequest(urlName, additional_headers = null) {
 
 
-	}
+		if (additional_headers) {
 
-	PostRequest(urlName:string, body:string, additional_headers:Array<any> = null){
+			additional_headers.map((header) => {
+				this.headers.append(header.key, header.value);
+			});
+		}
+
+		console.log(this.headers);
+		console.log(urlName);
+		return this._http.get(urlName, { headers: this.headers }).toPromise();
+	}	
+
+		PostRequest(urlName:string, body:string, additional_headers:Array<any> = null){
 		console.log(body)
 
 		if (additional_headers){

@@ -34,6 +34,7 @@ var LoginComponent = (function () {
         if (loginResponse.error != null) {
             this.error_messages = loginResponse.error;
         }
+        this._router.navigate(["Dashboard"]);
     };
     LoginComponent = __decorate([
         core_1.Component({

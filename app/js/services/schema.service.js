@@ -10,19 +10,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var api_service_1 = require("./api.service");
+var login_service_1 = require("./login.service");
+var http_service_1 = require("./http.service");
 var SchemaService = (function () {
-    function SchemaService(_apiService) {
+    function SchemaService(_httpService, _apiService, _loginService) {
+        this._httpService = _httpService;
         this._apiService = _apiService;
+        this._loginService = _loginService;
     }
     SchemaService.prototype.getUserSubscribedSchemas = function () {
-        //this._apiService.getRequest("userSchemas").then(this.handleSuccess).catch(this.handleError);
+        var _this = this;
+        return this._apiService.getApiRoute("userSchemas").then(function (route) {
+            return _this._loginService.get_authtoken().then(function (token) {
+                return _this._httpService.getRequest(route.server_url + route.url, [token]).then(_this.handleSuccess).catch(_this.handleError);
+            });
+        });
+        //("userSchemas").then(this.handleSuccess).catch(this.handleError);
     };
     SchemaService.prototype.getSubscribableSchemas = function () {
     };
     SchemaService.prototype.handleError = function (error) {
+        console.log(error);
         var result = JSON.parse(error._body);
         var errMsg = result.message;
-        //return Observable.throw(errMsg);
+        return errMsg;
     };
     SchemaService.prototype.handleSuccess = function (response) {
         console.log(response);
@@ -30,7 +41,7 @@ var SchemaService = (function () {
     };
     SchemaService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [api_service_1.ApiService])
+        __metadata('design:paramtypes', [http_service_1.HttpService, api_service_1.ApiService, login_service_1.LoginService])
     ], SchemaService);
     return SchemaService;
 }());
