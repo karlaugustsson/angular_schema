@@ -21,23 +21,18 @@ var SchemaService = (function () {
     SchemaService.prototype.getUserSubscribedSchemas = function () {
         var _this = this;
         return this._apiService.getApiRoute("userSchemas").then(function (route) {
-            return _this._loginService.get_authtoken().then(function (token) {
-                return _this._httpService.getRequest(route.server_url + route.url, [token]).then(_this.handleSuccess).catch(_this.handleError);
+            _this._loginService.get_authtoken().then(function (token) {
+                _this._httpService.getRequest(route.server_url + route.url, [token]).then(function (response) { return _this.handleSuccess(response); }, function (error) { return _this.handleError(error); });
             });
         });
-        //("userSchemas").then(this.handleSuccess).catch(this.handleError);
     };
     SchemaService.prototype.getSubscribableSchemas = function () {
     };
     SchemaService.prototype.handleError = function (error) {
         console.log(error);
-        var result = JSON.parse(error._body);
-        var errMsg = result.message;
-        return errMsg;
     };
     SchemaService.prototype.handleSuccess = function (response) {
         console.log(response);
-        return JSON.parse(response._body);
     };
     SchemaService = __decorate([
         core_1.Injectable(), 

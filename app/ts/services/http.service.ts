@@ -15,6 +15,10 @@ export class HttpService{
 	constructor(private _http:Http){
 		this.headers = new Headers({ 'Content-Type': 'application/json' });
 	}
+	private handleError(error: any) {
+  	console.error('An error occurred', error);
+	 return Promise.reject(error.message || error);
+	}
 
 	getRequest(urlName, additional_headers = null) {
 
@@ -28,11 +32,10 @@ export class HttpService{
 
 		console.log(this.headers);
 		console.log(urlName);
-		return this._http.get(urlName, { headers: this.headers }).toPromise();
-	}	
+		return this._http.get(urlName, { headers: this.headers }).toPromise().then(response => response.json()).catch(this.handleError);
+	}
 
-		PostRequest(urlName:string, body:string, additional_headers:Array<any> = null){
-		console.log(body)
+	PostRequest(urlName: string, body:string, additional_headers:Array<any> = null){
 
 		if (additional_headers){
 
@@ -41,8 +44,8 @@ export class HttpService{
 			});
 		}
 
-		console.log(urlName);
-		return this._http.post(urlName, body, { headers: this.headers }).toPromise();
+
+		return this._http.post(urlName, body, { headers: this.headers }).toPromise().then(response =>  response.json()).catch(this.handleError);
 
 	}
 }

@@ -22,6 +22,10 @@ var HttpService = (function () {
         this._http = _http;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
+    HttpService.prototype.handleError = function (error) {
+        console.error('An error occurred', error);
+        return Promise.reject(error.message || error);
+    };
     HttpService.prototype.getRequest = function (urlName, additional_headers) {
         var _this = this;
         if (additional_headers === void 0) { additional_headers = null; }
@@ -32,19 +36,17 @@ var HttpService = (function () {
         }
         console.log(this.headers);
         console.log(urlName);
-        return this._http.get(urlName, { headers: this.headers }).toPromise();
+        return this._http.get(urlName, { headers: this.headers }).toPromise().then(function (response) { return response.json(); }).catch(this.handleError);
     };
     HttpService.prototype.PostRequest = function (urlName, body, additional_headers) {
         var _this = this;
         if (additional_headers === void 0) { additional_headers = null; }
-        console.log(body);
         if (additional_headers) {
             additional_headers.map(function (header) {
                 _this.headers.append(header.key, header.value);
             });
         }
-        console.log(urlName);
-        return this._http.post(urlName, body, { headers: this.headers }).toPromise();
+        return this._http.post(urlName, body, { headers: this.headers }).toPromise().then(function (response) { return response.json(); }).catch(this.handleError);
     };
     HttpService = __decorate([
         core_1.Injectable(), 

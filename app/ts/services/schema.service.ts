@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import { ApiService } from "./api.service";
 import { LoginService } from "./login.service";
 import {HttpService} from "./http.service";
+import { Observable } from 'rxjs/Rx';
 @Injectable()
 
 export class SchemaService {
@@ -14,11 +15,11 @@ export class SchemaService {
 
 	getUserSubscribedSchemas() {
 		return this._apiService.getApiRoute("userSchemas").then((route) => {
-			return this._loginService.get_authtoken().then((token)=>{
-				return this._httpService.getRequest(route.server_url + route.url, [token]).then(this.handleSuccess).catch(this.handleError);
+			this._loginService.get_authtoken().then(token=>{
+			this._httpService.getRequest(route.server_url + route.url, [token]).then(response => this.handleSuccess(response) , error => this.handleError(error));
 			});
 		});
-		//("userSchemas").then(this.handleSuccess).catch(this.handleError);
+
 	}
 
 	getSubscribableSchemas(){
@@ -26,13 +27,11 @@ export class SchemaService {
 	}
 	handleError(error) {
 		console.log(error);
-		let result = JSON.parse(error._body);
-		let errMsg = result.message;
-		return errMsg;
+
 	}
 
 	handleSuccess(response){
 		console.log(response);
-		return JSON.parse(response._body);
+	
 	}
 }

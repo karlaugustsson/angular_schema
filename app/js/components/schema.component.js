@@ -19,13 +19,12 @@ var UserSchemaComponent = (function () {
         this.getUserSubscribedSchemas();
     };
     UserSchemaComponent.prototype.getUserSubscribedSchemas = function () {
-        var _this = this;
-        return this._schemaService.getUserSubscribedSchemas().then(function (response) { return _this.process_response(response); });
+        return this._schemaService.getUserSubscribedSchemas().then(function (success) { console.log(success); }, function (failure) { console.log(failure); });
     };
     UserSchemaComponent.prototype.process_response = function (response) {
         if (response) {
-            if (response.error) {
-                this.error = response.error;
+            if (typeof response == "string") {
+                this.error = response;
             }
             else {
                 this.schemas = response;

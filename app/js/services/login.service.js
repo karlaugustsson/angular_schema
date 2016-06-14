@@ -33,7 +33,7 @@ var LoginService = (function () {
             password = this.password;
         }
         var body = JSON.stringify({ 'email': email, "password": password });
-        return this._http.PostRequest(this.login_url, body).then(function (data) { return _this.handleSuccess(data, email, password); }).catch(this.handleError);
+        return this._http.PostRequest(this.login_url, body).then(function (data) { return _this.handleSuccess(data, email, password); });
     };
     LoginService.prototype.get_authtoken = function () {
         this.isAuthorized();
@@ -53,11 +53,10 @@ var LoginService = (function () {
         return errMsg;
     };
     LoginService.prototype.handleSuccess = function (data, email, password) {
-        var result = data.json();
         this.email = email;
         this.password = password;
         this.authorized = true;
-        return { key: "Authorization", value: "Bearer " + result.token };
+        return { key: "Authorization", value: "Bearer " + data.token };
     };
     LoginService = __decorate([
         core_1.Injectable(), 

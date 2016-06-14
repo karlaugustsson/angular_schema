@@ -28,7 +28,7 @@ export class LoginService{
 		}
 
 		let body = JSON.stringify({ 'email': email, "password": password });
-		return this._http.PostRequest(this.login_url, body).then(data => this.handleSuccess(data,email,password)).catch(this.handleError);
+		return this._http.PostRequest(this.login_url, body).then(data => this.handleSuccess(data, email, password) );
 	}
 
 	get_authtoken() {
@@ -53,13 +53,12 @@ export class LoginService{
 	}
 
 	handleSuccess(data,email,password){
-		let result = data.json();
 		
 		this.email = email;
 		this.password = password;
 		this.authorized = true;
 	
-		return {key:"Authorization" ,value: "Bearer " + result.token };
+		return {key:"Authorization" , value: "Bearer " + data.token };
 	}
 
 }

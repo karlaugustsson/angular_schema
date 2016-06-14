@@ -19,13 +19,13 @@ export class UserSchemaComponent implements OnInit{
 	}
 
 	getUserSubscribedSchemas(){
-		return this._schemaService.getUserSubscribedSchemas().then((response) => {return this.process_response(response)});
+		return this._schemaService.getUserSubscribedSchemas().then((success) => { console.log(success) }, (failure) => { console.log(failure) });
 	}
 
-	process_response(response){
+	process_response(response) {
 		if (response) {
-			if (response.error){
-				this.error = response.error;
+			if (typeof response =="string"){
+				this.error = response;
 			}else{
 
 				this.schemas = response;
