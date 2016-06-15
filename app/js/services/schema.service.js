@@ -52,8 +52,16 @@ var SchemaService = (function () {
             });
         });
     };
+    SchemaService.prototype.getSchema = function (schemaId) {
+        var _this = this;
+        return this._apiService.getApiRoute("Schema").then(function (route) {
+            var url = route.url.replace("{id}", schemaId);
+            return _this._loginService.get_authtoken().then(function (token) {
+                return _this._httpService.getRequest(route.server_url + url, [token]).then(function (response) { return response; }, function (error) { return _this.handleError(error); });
+            });
+        });
+    };
     SchemaService.prototype.handleError = function (response) {
-        console.log(response);
         return Promise.reject(response);
     };
     SchemaService = __decorate([

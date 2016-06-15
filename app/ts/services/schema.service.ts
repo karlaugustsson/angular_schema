@@ -55,9 +55,20 @@ export class SchemaService {
 			});
 		});
 	}
+	getSchema(schemaId){
+
+		return this._apiService.getApiRoute("Schema").then(route => {
+	
+			var url = route.url.replace("{id}", schemaId);
+				return this._loginService.get_authtoken().then(token=>{
+		
+				return this._httpService.getRequest(route.server_url + url, [token]).then(response => response, error => this.handleError(error) );
+			});
+		});
+	}
 
 	handleError(response) {
-		console.log(response)
+	
 		return Promise.reject(response);
 
 	}

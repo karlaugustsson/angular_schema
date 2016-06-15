@@ -17,6 +17,7 @@ var dashboard_component_1 = require("./dashboard.component");
 var api_service_1 = require("../services/api.service");
 var user_subscription_schema_component_1 = require("./user-subscription-schema.component");
 var available_schemas_component_1 = require("./available-schemas.component");
+var schema_component_1 = require("./schema.component");
 var AppComponent = (function () {
     function AppComponent(api_service) {
         this.api_service = api_service;
@@ -27,6 +28,7 @@ var AppComponent = (function () {
             { path: '/dashboard', name: "Dashboard", component: dashboard_component_1.DashBoardComponent },
             { path: '/user-schemas', name: "User Schema Subscriptions", component: user_subscription_schema_component_1.UserSubscriptionSchemaComponent },
             { path: '/available-schemas', name: "Available Schemas", component: available_schemas_component_1.AvailableSchemasComponent },
+            { path: '/schema/:id', name: "Schema", component: schema_component_1.SchemaComponent },
         ]),
         core_1.Component({
             selector: "my-app",

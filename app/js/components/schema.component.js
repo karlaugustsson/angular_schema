@@ -9,35 +9,47 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_deprecated_1 = require('@angular/router-deprecated');
 var schema_service_1 = require("../services/schema.service");
-var user_actions_component_1 = require("./user-actions.component");
-var UserSchemaComponent = (function () {
-    function UserSchemaComponent(_schemaService) {
+var date_service_1 = require("../services/date.service");
+var SchemaComponent = (function () {
+    function SchemaComponent(router_params, _router, _schemaService, _dateService) {
+        this.router_params = router_params;
+        this._router = _router;
         this._schemaService = _schemaService;
-        this.buttons_disabled = false;
+        this._dateService = _dateService;
+        this.schemaId = null;
+        this.schemaId = this.router_params.get("id");
+        if (!this.schemaId) {
+            this._router.navigate(["DashBoard"]);
+        }
     }
-    UserSchemaComponent.prototype.ngOnInit = function () {
-        this.getUserSubscribedSchemas();
+    SchemaComponent.prototype.ngOnInit = function () {
+        this.getSchema();
     };
-    UserSchemaComponent.prototype.getUserSubscribedSchemas = function () {
+    SchemaComponent.prototype.getSchema = function () {
         var _this = this;
-        return this._schemaService.getUserSubscribedSchemas().then(function (response) { _this.handleSuccess(response); }, function (error) { return _this.handleError(error); });
+        this._schemaService.getSchema(this.schemaId).then(function (response) { _this.handleSucces(response); }, function (response) { _this.handleError(response); });
     };
-    UserSchemaComponent.prototype.handleSuccess = function (response) {
-        this.schemas = response;
+    SchemaComponent.prototype.handleSucces = function (response) {
+        console.log(response);
+        this.schema = response;
     };
-    UserSchemaComponent.prototype.handleError = function (response) {
-        this.error = response.message;
+    SchemaComponent.prototype.handleError = function (response) {
+        console.log(response);
+        //this._router.navigate(["Dashboard"]);
     };
-    UserSchemaComponent = __decorate([
+    SchemaComponent.prototype.weekGoLeft = function () {
+    };
+    SchemaComponent = __decorate([
         core_1.Component({
             selector: "schema",
-            templateUrl: "app/html/user-schema.component.html",
-            directives: [user_actions_component_1.UserActionsComponent]
+            templateUrl: "app/html/schema.component.html",
+            providers: [date_service_1.DateService]
         }), 
-        __metadata('design:paramtypes', [schema_service_1.SchemaService])
-    ], UserSchemaComponent);
-    return UserSchemaComponent;
+        __metadata('design:paramtypes', [router_deprecated_1.RouteParams, router_deprecated_1.Router, schema_service_1.SchemaService, date_service_1.DateService])
+    ], SchemaComponent);
+    return SchemaComponent;
 }());
-exports.UserSchemaComponent = UserSchemaComponent;
+exports.SchemaComponent = SchemaComponent;
 //# sourceMappingURL=schema.component.js.map
