@@ -5,12 +5,12 @@ import { FooterComponent } from "./footer.component";
 import { LoginComponent } from "./login.component";
 import { DashBoardComponent } from "./dashboard.component";
 import { ApiService } from "../services/api.service";
-import {UserSchemaComponent} from "./schema.component";
+import {UserSubscriptionSchemaComponent} from "./user-subscription-schema.component";
 import {AvailableSchemasComponent} from "./available-schemas.component";
 @RouteConfig([
 { path: '/login', name:"Login",component: LoginComponent,useAsDefault:true},
 	{ path: '/dashboard', name:"Dashboard",component: DashBoardComponent},
-	{ path: '/user-schemas', name: "User Schema Subscriptions" ,component:  UserSchemaComponent},
+	{ path: '/user-schemas', name: "User Schema Subscriptions" ,component:  UserSubscriptionSchemaComponent},
 	{ path: '/available-schemas', name: "Available Schemas" ,component:  AvailableSchemasComponent},
 ])
 @Component({

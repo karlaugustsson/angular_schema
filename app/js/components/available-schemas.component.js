@@ -14,12 +14,34 @@ var schema_service_1 = require("../services/schema.service");
 var AvailableSchemasComponent = (function () {
     function AvailableSchemasComponent(_schemaservice) {
         this._schemaservice = _schemaservice;
+        this.buttons_disabled = false;
     }
     AvailableSchemasComponent.prototype.ngOnInit = function () {
         this.get_subscribable_schemas();
     };
     AvailableSchemasComponent.prototype.get_subscribable_schemas = function () {
-        this._schemaservice.getSubscribableSchemas();
+        var _this = this;
+        this._schemaservice.getSubscribableSchemas().then(function (response) { return _this.handleSuccess(response); }, function (response) { return _this.handleError(response); });
+    };
+    AvailableSchemasComponent.prototype.handleError = function (response) {
+        this.error = response.message;
+    };
+    AvailableSchemasComponent.prototype.handleSuccess = function (response) {
+        this.schemas = response;
+    };
+    AvailableSchemasComponent.prototype.change_subscription = function (schema) {
+        var _this = this;
+        this.buttons_disabled = true;
+        if (schema.is_subscriber == false) {
+            this._schemaservice.subscribeToSchema(schema.id);
+        }
+        else {
+            this._schemaservice.unsubscribeToSchema(schema.id);
+        }
+        setTimeout(function () {
+            _this.buttons_disabled = false;
+            schema.is_subscriber = !schema.is_subscriber;
+        }, 500);
     };
     AvailableSchemasComponent = __decorate([
         core_1.Component({

@@ -11,33 +11,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var schema_service_1 = require("../services/schema.service");
 var user_actions_component_1 = require("./user-actions.component");
-var UserSchemaComponent = (function () {
-    function UserSchemaComponent(_schemaService) {
+var UserSubscriptionSchemaComponent = (function () {
+    function UserSubscriptionSchemaComponent(_schemaService) {
         this._schemaService = _schemaService;
         this.buttons_disabled = false;
     }
-    UserSchemaComponent.prototype.ngOnInit = function () {
+    UserSubscriptionSchemaComponent.prototype.ngOnInit = function () {
         this.getUserSubscribedSchemas();
     };
-    UserSchemaComponent.prototype.getUserSubscribedSchemas = function () {
+    UserSubscriptionSchemaComponent.prototype.getUserSubscribedSchemas = function () {
         var _this = this;
         return this._schemaService.getUserSubscribedSchemas().then(function (response) { _this.handleSuccess(response); }, function (error) { return _this.handleError(error); });
     };
-    UserSchemaComponent.prototype.handleSuccess = function (response) {
+    UserSubscriptionSchemaComponent.prototype.handleSuccess = function (response) {
         this.schemas = response;
     };
-    UserSchemaComponent.prototype.handleError = function (response) {
+    UserSubscriptionSchemaComponent.prototype.handleError = function (response) {
         this.error = response.message;
     };
-    UserSchemaComponent = __decorate([
+    UserSubscriptionSchemaComponent = __decorate([
         core_1.Component({
             selector: "schema",
-            templateUrl: "app/html/user-schema.component.html",
+            templateUrl: "app/html/user-subscription-schema.component.html",
             directives: [user_actions_component_1.UserActionsComponent]
         }), 
         __metadata('design:paramtypes', [schema_service_1.SchemaService])
-    ], UserSchemaComponent);
-    return UserSchemaComponent;
+    ], UserSubscriptionSchemaComponent);
+    return UserSubscriptionSchemaComponent;
 }());
-exports.UserSchemaComponent = UserSchemaComponent;
-//# sourceMappingURL=schema.component.js.map
+exports.UserSubscriptionSchemaComponent = UserSubscriptionSchemaComponent;
+//# sourceMappingURL=user-subscription-schema.component.js.map

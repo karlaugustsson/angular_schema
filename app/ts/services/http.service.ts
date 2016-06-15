@@ -16,8 +16,8 @@ export class HttpService{
 		this.headers = new Headers({ 'Content-Type': 'application/json' });
 	}
 	private handleError(error: any) {
-  	console.error('An error occurred', error);
-	 return Promise.reject(error.message || error);
+		console.log(error);
+	 return Promise.reject(error.json() || error);
 	}
 
 	getRequest(urlName, additional_headers = null) {
@@ -26,13 +26,16 @@ export class HttpService{
 		if (additional_headers) {
 
 			additional_headers.map((header) => {
-				this.headers.append(header.key, header.value);
+				if(!this.headers.has(header.key)){
+					this.headers.append(header.key, header.value);
+				}else{
+					this.headers.set(header.key, header.value);
+				}
+
 			});
 		}
-
-		console.log(this.headers);
-		console.log(urlName);
-		return this._http.get(urlName, { headers: this.headers }).toPromise().then(response => response.json()).catch(this.handleError);
+	
+		return this._http.get(urlName, { headers: this.headers }).toPromise().then(response => response.json() ).catch(this.handleError);
 	}
 
 	PostRequest(urlName: string, body:string, additional_headers:Array<any> = null){

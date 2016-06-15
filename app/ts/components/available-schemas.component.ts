@@ -9,6 +9,9 @@ import {SchemaService} from "../services/schema.service";
 })
 
 export class AvailableSchemasComponent implements OnInit{
+	schemas;
+	error;
+	buttons_disabled: boolean = false;
 	constructor(private _schemaservice:SchemaService){
 
 	}
@@ -17,7 +20,34 @@ export class AvailableSchemasComponent implements OnInit{
 	}
 
 	get_subscribable_schemas(){
-		this._schemaservice.getSubscribableSchemas();
+		this._schemaservice.getSubscribableSchemas().then(response => this.handleSuccess(response) ,response =>  this.handleError(response));
+	}
+
+	handleError(response){
+		this.error = response.message;
+	}
+	handleSuccess(response){
+ 
+		this.schemas = response;
+	}
+	change_subscription(schema){
+		this.buttons_disabled = true;
+
+		if ( schema.is_subscriber == false ){
+
+			this._schemaservice.subscribeToSchema(schema.id);
+			
+		
+		} else {
+	
+			this._schemaservice.unsubscribeToSchema(schema.id);
+		
+		}
+		setTimeout(()=>{
+			this.buttons_disabled = false;
+			schema.is_subscriber = !schema.is_subscriber;
+		},500)
+
 	}
 
 }

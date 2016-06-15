@@ -3,5 +3,7 @@ import { ROUTE } from "../classes/route";
 export var ApiRoutesMock: Array<ROUTE> = [
 	new ROUTE("Authorize", "authorize"),
 	new ROUTE("userSchemas", "user/schemas", ["sort", "limit", "offset"]),
-	new ROUTE("userSubscribeableSchemas", "schemas", ["sort", "limit", "offset"])
+	new ROUTE("userSubscribeableSchemas", "schemas", [],["sort", "limit", "offset"]),
+	new ROUTE("UserSubscribeToSchema", "user/schema/subscribe/{id}", ["id"],[]),
+	new ROUTE("UserUnsubscribeToSchema", "user/schema/unsubscribe/{id}", ["id"],[])
 ] 

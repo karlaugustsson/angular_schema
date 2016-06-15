@@ -7,12 +7,14 @@ export class ROUTE {
 	component_name: string;
 	component_path: string;
 
-	constructor(name: string, url: string, optional: Array<string> = null,role:string = null){
-		
+	constructor(name: string, url: string, required_parameters: Array<string> = null,  optional_parameters:Array<string> = null, role:string = null){
+
 		this.name = name;
 		this.url = url;
-		this.optional_parameters = optional;
+		this.required_parameters = required_parameters;
+		this.optional_parameters = optional_parameters;
 		this.role = role;
+
 
 	}
 

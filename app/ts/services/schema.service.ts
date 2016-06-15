@@ -14,24 +14,51 @@ export class SchemaService {
 	}
 
 	getUserSubscribedSchemas() {
-		return this._apiService.getApiRoute("userSchemas").then((route) => {
-			this._loginService.get_authtoken().then(token=>{
-			this._httpService.getRequest(route.server_url + route.url, [token]).then(response => this.handleSuccess(response) , error => this.handleError(error));
+		return this._apiService.getApiRoute("userSchemas").then(route => {
+			return this._loginService.get_authtoken().then(token=>{
+				return this._httpService.getRequest(route.server_url + route.url, [token]).then(response =>  response, error => this.handleError(error) );
 			});
 		});
 
 	}
 
 	getSubscribableSchemas(){
-
+		return this._apiService.getApiRoute("userSubscribeableSchemas").then(route => {
+			return this._loginService.get_authtoken().then(token=>{
+				return this._httpService.getRequest(route.server_url + route.url, [token]).then(response =>  response, error => this.handleError(error) );
+			});
+		});
 	}
-	handleError(error) {
-		console.log(error);
 
-	}
-
-	handleSuccess(response){
-		console.log(response);
+	subscribeToSchema(schemaId){
 	
+		return this._apiService.getApiRoute("UserSubscribeToSchema").then(route => {
+			var url = route.url.replace("{id}", schemaId);
+	
+			return this._loginService.get_authtoken().then(token=>{
+	
+				return this._httpService.getRequest(route.server_url + url, [token]).then(response => response, error => this.handleError(error) );
+			});
+		});
+
+	}
+
+	unsubscribeToSchema(schemaId){
+		
+		return this._apiService.getApiRoute("UserUnsubscribeToSchema").then(route => {
+	
+			var url = route.url.replace("{id}", schemaId);
+
+			return this._loginService.get_authtoken().then(token=>{
+		
+				return this._httpService.getRequest(route.server_url + url, [token]).then(response => response, error => this.handleError(error) );
+			});
+		});
+	}
+
+	handleError(response) {
+		console.log(response)
+		return Promise.reject(response);
+
 	}
 }

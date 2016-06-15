@@ -34,7 +34,7 @@
 					</td>
 
 					<td>
-						<a class="btn-xs btn-danger"href="">unsubscribe</a>
+						<button class="btn-xs" [ngClass]="{'btn-danger': schema.is_subscriber, 'btn-success': !schema.is_subscriber, 'disabled': buttons_disabled}" href="" (click)="change_subscription(schema)" [disabled]="buttons_disabled">{{ schema.is_subscriber ? "Unsubscribe" : "Subscribe"}}</button>
 					</td>
 				</tr>
 
