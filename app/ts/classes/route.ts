@@ -3,6 +3,7 @@ export class ROUTE {
 	name: string;
 	url: string;
 	optional_parameters: Array<string>;
+	required_parameters:Array<string>;
 	role: string;
 	component_name: string;
 	component_path: string;

@@ -9,9 +9,10 @@ import {SchemaService} from "../services/schema.service";
 })
 
 export class AvailableSchemasComponent implements OnInit{
-	schemas;
+	schemas = [];
 	error;
 	buttons_disabled: boolean = false;
+	fetched_data = false;
 	constructor(private _schemaservice:SchemaService){
 
 	}
@@ -20,11 +21,13 @@ export class AvailableSchemasComponent implements OnInit{
 	}
 
 	get_subscribable_schemas(){
-		this._schemaservice.getSubscribableSchemas().then(response => this.handleSuccess(response) ,response =>  this.handleError(response));
+		this._schemaservice.getSubscribableSchemas().then(response => { this.handleSuccess(response); this.fetched_data = true;},response =>  this.handleError(response));
+
 	}
 
 	handleError(response){
-		this.error = response.message;
+		//do nothing as of now if left on it is just annoying
+		//this.error = response.message;
 	}
 	handleSuccess(response){
  

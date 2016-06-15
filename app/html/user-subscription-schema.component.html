@@ -37,6 +37,12 @@
 						<button class="btn-xs" [ngClass]="{'btn-danger': schema.is_subscriber, 'btn-success': !schema.is_subscriber, 'disabled': buttons_disabled}" href="" (click)="change_subscription(schema)" [disabled]="buttons_disabled">{{ schema.is_subscriber ? "Unsubscribe" : "Subscribe"}}</button>
 					</td>
 				</tr>
+				<tr *ngIf="fetched_data == false">
+					<td colspan="12" align="center"><i  >Loading schemas ...</i></td>
+				</tr>
+				<tr *ngIf="schemas.length == 0 && fetched_data == true">
+					<td colspan="12" align="center"><i>Empty result find schemas under "Available schemas" </i></td>
+				</tr>
 
 			</tbody>
 		</table>	

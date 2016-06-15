@@ -14,20 +14,37 @@ var user_actions_component_1 = require("./user-actions.component");
 var UserSubscriptionSchemaComponent = (function () {
     function UserSubscriptionSchemaComponent(_schemaService) {
         this._schemaService = _schemaService;
+        this.schemas = [];
         this.buttons_disabled = false;
+        this.fetched_data = false;
     }
     UserSubscriptionSchemaComponent.prototype.ngOnInit = function () {
         this.getUserSubscribedSchemas();
     };
     UserSubscriptionSchemaComponent.prototype.getUserSubscribedSchemas = function () {
         var _this = this;
-        return this._schemaService.getUserSubscribedSchemas().then(function (response) { _this.handleSuccess(response); }, function (error) { return _this.handleError(error); });
+        return this._schemaService.getUserSubscribedSchemas().then(function (response) { _this.handleSuccess(response); _this.fetched_data = true; }, function (error) { _this.handleError(error); _this.fetched_data = true; });
     };
     UserSubscriptionSchemaComponent.prototype.handleSuccess = function (response) {
         this.schemas = response;
     };
+    UserSubscriptionSchemaComponent.prototype.change_subscription = function (schema) {
+        var _this = this;
+        this.buttons_disabled = true;
+        if (schema.is_subscriber == false) {
+            this._schemaService.subscribeToSchema(schema.id);
+        }
+        else {
+            this._schemaService.unsubscribeToSchema(schema.id);
+        }
+        setTimeout(function () {
+            _this.buttons_disabled = false;
+            _this.schemas.splice(schema, 1);
+        }, 500);
+    };
     UserSubscriptionSchemaComponent.prototype.handleError = function (response) {
-        this.error = response.message;
+        // do nothing as of now
+        //this.error = response.message;
     };
     UserSubscriptionSchemaComponent = __decorate([
         core_1.Component({

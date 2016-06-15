@@ -14,17 +14,20 @@ var schema_service_1 = require("../services/schema.service");
 var AvailableSchemasComponent = (function () {
     function AvailableSchemasComponent(_schemaservice) {
         this._schemaservice = _schemaservice;
+        this.schemas = [];
         this.buttons_disabled = false;
+        this.fetched_data = false;
     }
     AvailableSchemasComponent.prototype.ngOnInit = function () {
         this.get_subscribable_schemas();
     };
     AvailableSchemasComponent.prototype.get_subscribable_schemas = function () {
         var _this = this;
-        this._schemaservice.getSubscribableSchemas().then(function (response) { return _this.handleSuccess(response); }, function (response) { return _this.handleError(response); });
+        this._schemaservice.getSubscribableSchemas().then(function (response) { _this.handleSuccess(response); _this.fetched_data = true; }, function (response) { return _this.handleError(response); });
     };
     AvailableSchemasComponent.prototype.handleError = function (response) {
-        this.error = response.message;
+        //do nothing as of now if left on it is just annoying
+        //this.error = response.message;
     };
     AvailableSchemasComponent.prototype.handleSuccess = function (response) {
         this.schemas = response;
