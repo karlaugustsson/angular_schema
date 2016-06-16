@@ -22,7 +22,7 @@
 					<button type="button" class="btn btn-default pull-left" aria-label="Left Align" (click)="weekGoLeft()">
 	  					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 					</button>
-					<span>{{LeftWeek.week_number}}/{{LeftWeek.year}} - {{RightWeek.week_number}}/{{RightWeek.year}}</span>
+					<span *ngFor="let schemaWeek of schemaWeeks">Vecka: {{schemaWeek.week_number + " "}}</span>
 					<button type="button" class="btn btn-default pull-right" aria-label="Left Align" (click)="weekGoRight()">
 	  					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 					</button>
@@ -30,12 +30,23 @@
 				</div>	
 			</div>
 			<div class="row">
-				<div class="schema">
-					<p>week 24</p>
+				<div class="schema" *ngFor="let schemaWeek of schemaWeeks">
+					<p>Vecka {{schemaWeek.week_number}}</p>
+					<table class="table striped">
+						
+						<thead>
+							<tr>
+								<th>Måndag</th>
+								<th>Tisdag</th>
+								<th>Onsdag</th>
+								<th>Torsdag</th>
+								<th>Fredag</th>	
+							</tr>			
+						</thead>
+						
+					</table>
 				</div>
-				<div class="schema">
-					<p>week 25</p>
-				</div>
+
 			</div>
 
 		</div>

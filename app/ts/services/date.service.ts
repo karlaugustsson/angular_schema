@@ -16,14 +16,15 @@ export class DateService {
 
 		return { week_start: week_start, week_end: week_end, week_number: week_number,year:year}
 	}
-	getCurrentNextWeek(){
-		let week_start = (Date.today().is().mon()) ? Date.today().add(7).days : Date.today().last().mon().add(7).days();
-		let week_end  =  (Date.today().is().sun()) ? Date.today().add(7).days : Date.today().next().sun().add(7).days();
+	getNumWeeksAfterCurrentWeek(num: number) {
+		let num_weeks = num * 7;
+		let week_start = (Date.today().is().mon()) ? Date.today().add(num_weeks).days() : Date.today().last().mon().add(num_weeks).days();
+		let week_end = (Date.today().is().sun()) ? Date.today().add(num_weeks).days() : Date.today().next().sun().add(num_weeks).days();
 		let week_number = Date.parse(week_start).getWeek();
-		let year = Date.parse(week_start).toString("yyyy");
+		let year = Date.parse(week_start).toString("yyyy")
+		return { week_start: week_start, week_end: week_end, week_number: week_number, year: year }
 
-		return { week_start: week_start, week_end: week_end, week_number: week_number,year:year}
-		}
+	}	
 	getLastWeek(weekobj) {
 
 		let week_start = weekobj.week_start.last().week();
