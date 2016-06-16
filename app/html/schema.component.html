@@ -22,8 +22,8 @@
 					<button type="button" class="btn btn-default pull-left" aria-label="Left Align" (click)="weekGoLeft()">
 	  					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 					</button>
-					<span>{{current_week}} - {{next_week}}</span>
-					<button type="button" class="btn btn-default pull-right" aria-label="Left Align">
+					<span>{{LeftWeek.week_number}}/{{LeftWeek.year}} - {{RightWeek.week_number}}/{{RightWeek.year}}</span>
+					<button type="button" class="btn btn-default pull-right" aria-label="Left Align" (click)="weekGoRight()">
 	  					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 					</button>
 					

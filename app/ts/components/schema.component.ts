@@ -10,10 +10,12 @@ import { DateService } from "../services/date.service";
 export class SchemaComponent implements OnInit{
 	schemaId:string = null;
 	schema;
-	currentWeek;
-	nextWeek;
+	LeftWeek;
+	RightWeek;
 	ngOnInit(){
 		this.getSchema();
+		this.setTodaysCurrentWeek();
+		this.setTodaysNextWeek()
 	}
 	constructor(private router_params:RouteParams,private _router:Router ,private  _schemaService:SchemaService , private _dateService:DateService){
 
@@ -36,6 +38,34 @@ export class SchemaComponent implements OnInit{
 		//this._router.navigate(["Dashboard"]);
 	}
 	weekGoLeft(){
+	for (var i = 0; i < 2; i++) {
+		this.LeftWeek = this.goOneWeekBack(this.LeftWeek);
+		this.RightWeek = this.goOneWeekBack(this.RightWeek);
+		
+	}
+
+	}
+	weekGoRight() {
+		for (var i = 0; i < 2  i++) {
+			this.LeftWeek = this.goOneWeekAhead(this.LeftWeek);
+			this.RightWeek = this.goOneWeekAhead(this.RightWeek);
+
+
+		}
+	}
+	setTodaysCurrentWeek( ){
+		this.LeftWeek = this._dateService.getCurrentWeek();
+	}
+	setTodaysNextWeek(){
+		this.RightWeek = this._dateService.getCurrentNextWeek();
+	}
+	goOneWeekBack(weekObj){
+
+		return this._dateService.getLastWeek(weekObj)
+
+	}
+	goOneWeekAhead(weekObj){
+		return this._dateService.getNextWeek(weekObj)
 	}
 
 }

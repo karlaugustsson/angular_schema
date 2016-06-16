@@ -26,6 +26,8 @@ var SchemaComponent = (function () {
     }
     SchemaComponent.prototype.ngOnInit = function () {
         this.getSchema();
+        this.setTodaysCurrentWeek();
+        this.setTodaysNextWeek();
     };
     SchemaComponent.prototype.getSchema = function () {
         var _this = this;
@@ -40,6 +42,28 @@ var SchemaComponent = (function () {
         //this._router.navigate(["Dashboard"]);
     };
     SchemaComponent.prototype.weekGoLeft = function () {
+        for (var i = 0; i < 2; i++) {
+            this.LeftWeek = this.goOneWeekBack(this.LeftWeek);
+            this.RightWeek = this.goOneWeekBack(this.RightWeek);
+        }
+    };
+    SchemaComponent.prototype.weekGoRight = function () {
+        for (var i = 0; i < 2; i++) {
+            this.LeftWeek = this.goOneWeekAhead(this.LeftWeek);
+            this.RightWeek = this.goOneWeekAhead(this.RightWeek);
+        }
+    };
+    SchemaComponent.prototype.setTodaysCurrentWeek = function () {
+        this.LeftWeek = this._dateService.getCurrentWeek();
+    };
+    SchemaComponent.prototype.setTodaysNextWeek = function () {
+        this.RightWeek = this._dateService.getCurrentNextWeek();
+    };
+    SchemaComponent.prototype.goOneWeekBack = function (weekObj) {
+        return this._dateService.getLastWeek(weekObj);
+    };
+    SchemaComponent.prototype.goOneWeekAhead = function (weekObj) {
+        return this._dateService.getNextWeek(weekObj);
     };
     SchemaComponent = __decorate([
         core_1.Component({
