@@ -31,14 +31,14 @@ var DateService = (function () {
         var week_start = weekobj.week_start.last().week();
         var week_end = Date.parse(week_start).next().sun();
         var week_number = Date.parse(week_start).getWeek();
-        var year = (week_number == 1) ? Date.parse(week_end).toString("yyyy") : Date.parse(week_start).toString("yyyy");
+        var year = Date.parse(week_start).toString("yyyy");
         return { week_start: week_start, week_end: week_end, week_number: week_number, year: year };
     };
     DateService.prototype.getNextWeeek = function (weekobj) {
         var week_start = weekobj.week_start.next().week();
         var week_end = Date.parse(week_start).next().sun();
         var week_number = Date.parse(week_start).getWeek();
-        var year = (week_number == 1) ? Date.parse(week_end).toString("yyyy") : Date.parse(week_start).toString("yyyy");
+        var year = Date.parse(week_start).toString("yyyy");
         return { week_start: week_start, week_end: week_end, week_number: week_number, year: year };
     };
     DateService = __decorate([

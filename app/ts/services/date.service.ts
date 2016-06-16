@@ -29,7 +29,7 @@ export class DateService {
 		let week_start = weekobj.week_start.last().week();
 		let week_end = Date.parse(week_start).next().sun();
 		let week_number = Date.parse(week_start).getWeek();
-		let year = (week_number == 1) ? Date.parse(week_end).toString("yyyy") : Date.parse(week_start).toString("yyyy");
+		let year = Date.parse(week_start).toString("yyyy");
 
 		return { week_start: week_start, week_end: week_end, week_number: week_number, year: year }
 	}	
@@ -37,7 +37,7 @@ export class DateService {
 		let week_start = weekobj.week_start.next().week();
 		let week_end = Date.parse(week_start).next().sun();
 		let week_number = Date.parse(week_start).getWeek();
-		let year = (week_number == 1) ? Date.parse(week_end).toString("yyyy") : Date.parse(week_start).toString("yyyy");
+		let year = Date.parse(week_start).toString("yyyy");
 
 		return { week_start: week_start, week_end: week_end, week_number: week_number, year: year }
 	}
