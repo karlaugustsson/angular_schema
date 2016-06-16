@@ -63,7 +63,7 @@ var SchemaComponent = (function () {
         return this._dateService.getLastWeek(weekObj);
     };
     SchemaComponent.prototype.goOneWeekAhead = function (weekObj) {
-        return this._dateService.getNextWeek(weekObj);
+        return this._dateService.getNextWeeek(weekObj);
     };
     SchemaComponent = __decorate([
         core_1.Component({

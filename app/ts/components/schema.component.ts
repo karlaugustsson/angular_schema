@@ -46,7 +46,7 @@ export class SchemaComponent implements OnInit{
 
 	}
 	weekGoRight() {
-		for (var i = 0; i < 2  i++) {
+		for (var i = 0; i < 2; i++) {
 			this.LeftWeek = this.goOneWeekAhead(this.LeftWeek);
 			this.RightWeek = this.goOneWeekAhead(this.RightWeek);
 
@@ -65,7 +65,7 @@ export class SchemaComponent implements OnInit{
 
 	}
 	goOneWeekAhead(weekObj){
-		return this._dateService.getNextWeek(weekObj)
+		return this._dateService.getNextWeeek(weekObj);
 	}
 
 }
