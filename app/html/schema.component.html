@@ -8,10 +8,10 @@
 					</div>
 					<div class="col-xs-6">
 						<span>view:</span>
-						<button type="button" class="btn btn-default active" aria-label="Left Align">
+						<button type="button" class="btn btn-default" [ngClass]="{active:less}" aria-label="Left Align" (click)="changeNumberOfWeeks(true)">
 	  						<span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
 						</button>
-						<button type="button" class="btn btn-default" aria-label="Left Align">
+						<button type="button" class="btn btn-default" aria-label="Left Align" [ngClass]="{active:!less}" (click)="changeNumberOfWeeks(false)">
 	  						<span class="glyphicon glyphicon glyphicon-th" aria-hidden="true"></span>
 						</button>
 					</div>
@@ -40,7 +40,9 @@
 								<th>Tisdag</th>
 								<th>Onsdag</th>
 								<th>Torsdag</th>
-								<th>Fredag</th>	
+								<th>Fredag</th>
+								<th>Lördag</th>
+								<th>Söndag</th>
 							</tr>			
 						</thead>
 						

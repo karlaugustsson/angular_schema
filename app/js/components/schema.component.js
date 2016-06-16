@@ -19,15 +19,34 @@ var SchemaComponent = (function () {
         this._schemaService = _schemaService;
         this._dateService = _dateService;
         this.schemaId = null;
+        this.schemaWeeks = [];
+        this.showNumWeeks = 2;
+        this.less = true;
         this.schemaId = this.router_params.get("id");
         if (!this.schemaId) {
             this._router.navigate(["DashBoard"]);
         }
     }
+    SchemaComponent.prototype.changeNumberOfWeeks = function (less) {
+        this.less = less;
+        if (less) {
+            if (this.schemaWeeks.length != 2) {
+                this.schemaWeeks.splice(2, 2);
+            }
+        }
+        else {
+            if (this.schemaWeeks.length == 2) {
+                for (var i = 0; i < 2; i++) {
+                    console.log(this.schemaWeeks[this.schemaWeeks.length - 1]);
+                    this.schemaWeeks.push(this.goOneWeekAhead(this.schemaWeeks[this.schemaWeeks.length - 1]));
+                }
+                console.log(this.schemaWeeks);
+            }
+        }
+    };
     SchemaComponent.prototype.ngOnInit = function () {
         this.getSchema();
-        this.setTodaysCurrentWeek();
-        this.setTodaysNextWeek();
+        this.setWeeks(this.showNumWeeks);
     };
     SchemaComponent.prototype.getSchema = function () {
         var _this = this;
@@ -42,28 +61,31 @@ var SchemaComponent = (function () {
         //this._router.navigate(["Dashboard"]);
     };
     SchemaComponent.prototype.weekGoLeft = function () {
-        for (var i = 0; i < 2; i++) {
-            this.LeftWeek = this.goOneWeekBack(this.LeftWeek);
-            this.RightWeek = this.goOneWeekBack(this.RightWeek);
+        for (var i = 0; i < this.schemaWeeks.length; i++) {
+            for (var j = 0; j < this.schemaWeeks.length; j++) {
+                this.schemaWeeks[j] = this.goOneWeekBack(this.schemaWeeks[j]);
+            }
         }
     };
     SchemaComponent.prototype.weekGoRight = function () {
-        for (var i = 0; i < 2; i++) {
-            this.LeftWeek = this.goOneWeekAhead(this.LeftWeek);
-            this.RightWeek = this.goOneWeekAhead(this.RightWeek);
+        for (var i = 0; i < this.schemaWeeks.length; i++) {
+            for (var j = 0; j < this.schemaWeeks.length; j++) {
+                this.schemaWeeks[j] = this.goOneWeekAhead(this.schemaWeeks[j]);
+            }
         }
     };
-    SchemaComponent.prototype.setTodaysCurrentWeek = function () {
-        this.LeftWeek = this._dateService.getCurrentWeek();
-    };
-    SchemaComponent.prototype.setTodaysNextWeek = function () {
-        this.RightWeek = this._dateService.getCurrentNextWeek();
+    SchemaComponent.prototype.setWeeks = function (numberOfWeeks) {
+        for (var i = 0; i < numberOfWeeks; i++) {
+            console.log(0);
+            this.schemaWeeks.push(this._dateService.getNumWeeksAfterCurrentWeek(i));
+            console.log(this.schemaWeeks);
+        }
     };
     SchemaComponent.prototype.goOneWeekBack = function (weekObj) {
         return this._dateService.getLastWeek(weekObj);
     };
     SchemaComponent.prototype.goOneWeekAhead = function (weekObj) {
-        return this._dateService.getNextWeeek(weekObj);
+        return this._dateService.getNextWeek(weekObj);
     };
     SchemaComponent = __decorate([
         core_1.Component({

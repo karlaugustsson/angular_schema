@@ -4,14 +4,34 @@ import { SchemaService } from "../services/schema.service";
 import { DateService } from "../services/date.service";
 @Component({
 	selector: "schema",
-	templateUrl:"app/html/schema.component.html",
-	providers:[DateService]
+	templateUrl: "app/html/schema.component.html",
+	providers: [DateService]
 })
-export class SchemaComponent implements OnInit{
-	schemaId:string = null;
+export class SchemaComponent implements OnInit {
+	schemaId: string = null;
 	schema;
-	schemaWeeks:Array<any> = [];
+	schemaWeeks: Array<any> = [];
 	showNumWeeks = 2;
+	less: boolean = true;
+
+	changeNumberOfWeeks(less: boolean) {
+		this.less = less;
+		if (less) {
+			if (this.schemaWeeks.length != 2) {
+				this.schemaWeeks.splice(2, 2);
+			}
+		} else {
+			if (this.schemaWeeks.length == 2) {
+				for (var i = 0; i < 2; i++) {
+					console.log(this.schemaWeeks[this.schemaWeeks.length -1]);
+
+					this.schemaWeeks.push(this.goOneWeekAhead(this.schemaWeeks[this.schemaWeeks.length -1 ]));
+				}
+				console.log(this.schemaWeeks);
+			}
+		}
+	}
+
 	ngOnInit(){
 		this.getSchema();
 		this.setWeeks(this.showNumWeeks);
@@ -37,7 +57,7 @@ export class SchemaComponent implements OnInit{
 		//this._router.navigate(["Dashboard"]);
 	}
 	weekGoLeft(){
-		for (var i = 0; i < 2; i++) {
+		for (var i = 0; i < this.schemaWeeks.length; i++) {
 			for (var j = 0; j < this.schemaWeeks.length; j++) {
 				this.schemaWeeks[j] = this.goOneWeekBack(this.schemaWeeks[j]);
 		
@@ -46,7 +66,7 @@ export class SchemaComponent implements OnInit{
 		}
 	}
 	weekGoRight() {
-		for (var i = 0; i < 2; i++) {
+		for (var i = 0; i < this.schemaWeeks.length; i++) {
 			for (var j = 0; j < this.schemaWeeks.length; j++) {
 				this.schemaWeeks[j] = this.goOneWeekAhead(this.schemaWeeks[j]);
 		
@@ -67,7 +87,7 @@ export class SchemaComponent implements OnInit{
 
 	}
 	goOneWeekAhead(weekObj){
-		return this._dateService.getNextWeeek(weekObj);
+		return this._dateService.getNextWeek(weekObj);
 	}
 
 }
