@@ -70,7 +70,6 @@ export class SchemaComponent implements OnInit {
 	setWeeks(numberOfWeeks) {
 		for (var i = 0; i < numberOfWeeks; i++) {
 
-
 			this.schemaWeeks.push(this._dateService.getNumWeeksAfterDate(i));
 		
 		}
