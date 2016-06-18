@@ -74,6 +74,7 @@ var SchemaComponent = (function () {
         for (var i = 0; i < numberOfWeeks; i++) {
             this.schemaWeeks.push(this._dateService.getNumWeeksAfterDate(i));
         }
+        console.log(this.schemaWeeks);
     };
     SchemaComponent.prototype.goNumWeeksBack = function (num, weekObj) {
         return this._dateService.getNumWeeksBeforeDate(num, weekObj.week_start);

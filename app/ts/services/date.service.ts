@@ -22,6 +22,7 @@ export class DateService {
 
 	}
 	private getEndOfWeek(date = false) {
+	
 		let sunday = null;
 
 		if (date) {
@@ -36,6 +37,18 @@ export class DateService {
 		return sunday.next().sun();
 
 	}
+
+	private getYearofDate(date){
+
+		return Date.parse(date).toString("yyyy")
+	}
+	private geyWeekOfDate(date){
+		return Date.parse(date).getWeek();
+	}
+
+	private isDateToday(date){
+	return (Date.today().toString() == Date.parse(date).toString());
+	}
 	getNumWeeksAfterDate(num: number, start_date = false) {
 
 		let num_weeks = num * 7;
@@ -47,11 +60,12 @@ export class DateService {
 			week_start = this.getStartOfWeek(start_date).add(num_weeks).days();	
 		}
 
-		let week_end = this.getEndOfWeek(week_start).add(num_weeks).days();
+		let week_end = this.getEndOfWeek(week_start);
+		let week_number = this.geyWeekOfDate(week_start);
+		let year = this.getYearofDate(week_start);
+		let days = this.getDaysBetween(week_start, week_end);
 		
-		let week_number = Date.parse(week_start).getWeek();
-		let year = Date.parse(week_start).toString("yyyy")
-		return { week_start: week_start, week_end: week_end, week_number: week_number, year: year }
+		return { week_start: week_start, week_end: week_end, week_number: week_number, year: year,days:days }
 
 	}	
 	getNumWeeksBeforeDate(num: number, start_date = false) {
@@ -66,19 +80,25 @@ export class DateService {
 		}
 
 		let week_end = this.getEndOfWeek(week_start);
-		let week_number = Date.parse(week_start).getWeek();
-		let year = Date.parse(week_start).toString("yyyy");
+		let week_number = this.geyWeekOfDate(week_start);
+		let year = this.getYearofDate(week_start);
+		let days = this.getDaysBetween(week_start, week_end);
 
-		return {week_start: week_start, week_end: week_end, week_number: week_number, year: year}
+		return {week_start: week_start, week_end: week_end, week_number: week_number, year: year , days:days}
 	}
 
 		getDaysBetween(start_date, end_date) {
-			let le_date = [Date.parse(start_date)];
-			while (le_date[le_date.length -1] != end_date){
-				le_date.push(Date.parse(le_date[le_date.length - 1].add(1).days()));
+			let is_today = this.isDateToday(start_date);
+			let le_date = [{ day: Date.parse(start_date), is_today: is_today }];
+			le_date[0].label = le_date[0].day.toString("dddd \n\r d/MM")
+			while (le_date[le_date.length -1].day.toString() != end_date.toString()){
+				let next_day = Date.parse(le_date[le_date.length - 1].day).add(1).days();
+				let is_today = this.isDateToday(next_day);
+				le_date.push({ label:next_day.toString("dddd \n\r d/MM"),day:next_day,is_today:is_today });
+				
 			}
 
-			return Date;
+			return le_date;
 		}
 
 }

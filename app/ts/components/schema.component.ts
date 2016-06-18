@@ -73,6 +73,7 @@ export class SchemaComponent implements OnInit {
 			this.schemaWeeks.push(this._dateService.getNumWeeksAfterDate(i));
 		
 		}
+		console.log(this.schemaWeeks);
 	}
 	goNumWeeksBack(num , weekObj) {
 

@@ -36,13 +36,7 @@
 						
 						<thead>
 							<tr>
-								<th>Måndag</th>
-								<th>Tisdag</th>
-								<th>Onsdag</th>
-								<th>Torsdag</th>
-								<th>Fredag</th>
-								<th>Lördag</th>
-								<th>Söndag</th>
+							<th *ngFor="let day of schemaWeek.days" [ngClass]="{active:day.is_today}">{{day.label}}</th>
 							</tr>			
 						</thead>
 						
