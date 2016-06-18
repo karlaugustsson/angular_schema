@@ -50,6 +50,9 @@ var DateService = (function () {
     DateService.prototype.isDateToday = function (date) {
         return (Date.today().toString() == Date.parse(date).toString());
     };
+    DateService.prototype.getMonthofDate = function (date) {
+        return Date.parse(date).toString("MMMM");
+    };
     DateService.prototype.getNumWeeksAfterDate = function (num, start_date) {
         if (start_date === void 0) { start_date = false; }
         var num_weeks = num * 7;
@@ -62,9 +65,10 @@ var DateService = (function () {
         }
         var week_end = this.getEndOfWeek(week_start);
         var week_number = this.geyWeekOfDate(week_start);
+        var month = this.getMonthofDate(week_start);
         var year = this.getYearofDate(week_start);
         var days = this.getDaysBetween(week_start, week_end);
-        return { week_start: week_start, week_end: week_end, week_number: week_number, year: year, days: days };
+        return { week_start: week_start, week_end: week_end, week_number: week_number, month: month, year: year, days: days };
     };
     DateService.prototype.getNumWeeksBeforeDate = function (num, start_date) {
         if (start_date === void 0) { start_date = false; }
@@ -78,13 +82,14 @@ var DateService = (function () {
         }
         var week_end = this.getEndOfWeek(week_start);
         var week_number = this.geyWeekOfDate(week_start);
+        var month = this.getMonthofDate(week_start);
         var year = this.getYearofDate(week_start);
         var days = this.getDaysBetween(week_start, week_end);
-        return { week_start: week_start, week_end: week_end, week_number: week_number, year: year, days: days };
+        return { week_start: week_start, week_end: week_end, week_number: week_number, year: year, month: month, days: days };
     };
     DateService.prototype.getDaysBetween = function (start_date, end_date) {
         var is_today = this.isDateToday(start_date);
-        var le_date = [{ day: Date.parse(start_date), is_today: is_today }];
+        var le_date = [{ day: Date.parse(start_date), is_today: is_today, label: null }];
         le_date[0].label = le_date[0].day.toString("dddd \n\r d/MM");
         while (le_date[le_date.length - 1].day.toString() != end_date.toString()) {
             var next_day = Date.parse(le_date[le_date.length - 1].day).add(1).days();

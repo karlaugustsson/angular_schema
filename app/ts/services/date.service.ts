@@ -47,7 +47,10 @@ export class DateService {
 	}
 
 	private isDateToday(date){
-	return (Date.today().toString() == Date.parse(date).toString());
+		return (Date.today().toString() == Date.parse(date).toString());
+	}
+	private getMonthofDate(date){
+			return Date.parse(date).toString("MMMM")
 	}
 	getNumWeeksAfterDate(num: number, start_date = false) {
 
@@ -62,10 +65,11 @@ export class DateService {
 
 		let week_end = this.getEndOfWeek(week_start);
 		let week_number = this.geyWeekOfDate(week_start);
+		let month = this.getMonthofDate(week_start);		
 		let year = this.getYearofDate(week_start);
 		let days = this.getDaysBetween(week_start, week_end);
 		
-		return { week_start: week_start, week_end: week_end, week_number: week_number, year: year,days:days }
+		return { week_start: week_start, week_end: week_end, week_number: week_number,month:month, year: year,days:days }
 
 	}	
 	getNumWeeksBeforeDate(num: number, start_date = false) {
@@ -81,15 +85,16 @@ export class DateService {
 
 		let week_end = this.getEndOfWeek(week_start);
 		let week_number = this.geyWeekOfDate(week_start);
+		let month = this.getMonthofDate(week_start);
 		let year = this.getYearofDate(week_start);
 		let days = this.getDaysBetween(week_start, week_end);
 
-		return {week_start: week_start, week_end: week_end, week_number: week_number, year: year , days:days}
+		return {week_start: week_start, week_end: week_end, week_number: week_number, year: year ,month:month ,days:days}
 	}
 
 		getDaysBetween(start_date, end_date) {
 			let is_today = this.isDateToday(start_date);
-			let le_date = [{ day: Date.parse(start_date), is_today: is_today }];
+			let le_date = [{ day: Date.parse(start_date), is_today: is_today,label:null }];
 			le_date[0].label = le_date[0].day.toString("dddd \n\r d/MM")
 			while (le_date[le_date.length -1].day.toString() != end_date.toString()){
 				let next_day = Date.parse(le_date[le_date.length - 1].day).add(1).days();
