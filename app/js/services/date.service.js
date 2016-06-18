@@ -13,32 +13,60 @@ var Date = require("datejs");
 var DateService = (function () {
     function DateService() {
     }
+    DateService.prototype.getStartOfWeek = function (date) {
+        if (date === void 0) { date = false; }
+        var monday = null;
+        if (date) {
+            monday = Date.parse(date);
+        }
+        else {
+            monday = Date.today();
+        }
+        if (monday.is().mon()) {
+            return monday;
+        }
+        return monday.last().mon();
+    };
+    DateService.prototype.getEndOfWeek = function (date) {
+        if (date === void 0) { date = false; }
+        var sunday = null;
+        if (date) {
+            sunday = Date.parse(date);
+        }
+        else {
+            sunday = Date.today();
+        }
+        if (sunday.is().sun()) {
+            return sunday;
+        }
+        return sunday.next().sun();
+    };
     DateService.prototype.getNumWeeksAfterDate = function (num, start_date) {
         if (start_date === void 0) { start_date = false; }
         var num_weeks = num * 7;
         var week_start = null;
         if (!start_date) {
-            week_start = (Date.today().is().mon()) ? Date.today().add(num_weeks).days() : Date.today().last().mon().add(num_weeks).days();
+            week_start = this.getStartOfWeek().add(num_weeks).days();
         }
         else {
-            week_start = Date.parse(start_date).add(num_weeks).days();
+            week_start = this.getStartOfWeek(start_date).add(num_weeks).days();
         }
-        var week_end = (Date.parse(week_start).is().sun()) ? Date.parse(week_start).add(num_weeks).days() : Date.parse(week_start).next().sun().add(num_weeks).days();
+        var week_end = this.getEndOfWeek(week_start).add(num_weeks).days();
         var week_number = Date.parse(week_start).getWeek();
         var year = Date.parse(week_start).toString("yyyy");
         return { week_start: week_start, week_end: week_end, week_number: week_number, year: year };
     };
-    DateService.prototype.getNumWeeksBeforeDate = function (start_date, num) {
+    DateService.prototype.getNumWeeksBeforeDate = function (num, start_date) {
         if (start_date === void 0) { start_date = false; }
         var num_weeks = -(num * 7);
         var week_start = null;
         if (!start_date) {
-            week_start = (Date.today().is().mon()) ? Date.today().add(num_weeks).days() : Date.today().last().mon().add(num_weeks).days();
+            week_start = this.getStartOfWeek().add(num_weeks).days();
         }
         else {
-            week_start = Date.parse(start_date).add(num_weeks).days();
+            week_start = this.getStartOfWeek(start_date).add(num_weeks).days();
         }
-        var week_end = Date.parse(week_start).next().sun();
+        var week_end = this.getEndOfWeek(week_start);
         var week_number = Date.parse(week_start).getWeek();
         var year = Date.parse(week_start).toString("yyyy");
         return { week_start: week_start, week_end: week_end, week_number: week_number, year: year };

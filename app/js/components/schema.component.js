@@ -76,7 +76,7 @@ var SchemaComponent = (function () {
         }
     };
     SchemaComponent.prototype.goNumWeeksBack = function (num, weekObj) {
-        return this._dateService.getNumWeeksBeforeDate(weekObj.week_start, num);
+        return this._dateService.getNumWeeksBeforeDate(num, weekObj.week_start);
     };
     SchemaComponent.prototype.goNumWeeksAhead = function (num, weekObj) {
         return this._dateService.getNumWeeksAfterDate(num, weekObj.week_start);

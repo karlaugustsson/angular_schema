@@ -59,12 +59,12 @@ export class SchemaComponent implements OnInit {
 	weekGoLeft(){
 		for (var i = 0; i < this.schemaWeeks.length ; i++) {
 
-				this.schemaWeeks[i] = this.goNumWeeksBack(this.schemaWeeks.length ,this.schemaWeeks[i]);
+		this.schemaWeeks[i] = this.goNumWeeksBack(this.schemaWeeks.length ,this.schemaWeeks[i]);
 		}
 	}
 	weekGoRight() {
 		for (var i = 0; i < this.schemaWeeks.length ;  i++) {
-					this.schemaWeeks[i] = this.goNumWeeksAhead(this.schemaWeeks.length  ,this.schemaWeeks[i]);
+			this.schemaWeeks[i] = this.goNumWeeksAhead(this.schemaWeeks.length  ,this.schemaWeeks[i]);
 		}
 	}
 	setWeeks(numberOfWeeks) {
@@ -77,7 +77,7 @@ export class SchemaComponent implements OnInit {
 	}
 	goNumWeeksBack(num , weekObj) {
 
-		return this._dateService.getNumWeeksBeforeDate(weekObj.week_start, num);
+		return this._dateService.getNumWeeksBeforeDate(num, weekObj.week_start);
 
 	}
 	goNumWeeksAhead(num, weekObj) {
