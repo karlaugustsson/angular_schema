@@ -38,7 +38,7 @@ var SchemaComponent = (function () {
             if (this.schemaWeeks.length == 2) {
                 for (var i = 0; i < 2; i++) {
                     console.log(this.schemaWeeks[this.schemaWeeks.length - 1]);
-                    this.schemaWeeks.push(this.goOneWeekAhead(this.schemaWeeks[this.schemaWeeks.length - 1]));
+                    this.schemaWeeks.push(this.goNumWeeksAhead(1, this.schemaWeeks[this.schemaWeeks.length - 1]));
                 }
                 console.log(this.schemaWeeks);
             }
@@ -62,30 +62,24 @@ var SchemaComponent = (function () {
     };
     SchemaComponent.prototype.weekGoLeft = function () {
         for (var i = 0; i < this.schemaWeeks.length; i++) {
-            for (var j = 0; j < this.schemaWeeks.length; j++) {
-                this.schemaWeeks[j] = this.goOneWeekBack(this.schemaWeeks[j]);
-            }
+            this.schemaWeeks[i] = this.goNumWeeksBack(this.schemaWeeks.length, this.schemaWeeks[i]);
         }
     };
     SchemaComponent.prototype.weekGoRight = function () {
         for (var i = 0; i < this.schemaWeeks.length; i++) {
-            for (var j = 0; j < this.schemaWeeks.length; j++) {
-                this.schemaWeeks[j] = this.goOneWeekAhead(this.schemaWeeks[j]);
-            }
+            this.schemaWeeks[i] = this.goNumWeeksAhead(this.schemaWeeks.length, this.schemaWeeks[i]);
         }
     };
     SchemaComponent.prototype.setWeeks = function (numberOfWeeks) {
         for (var i = 0; i < numberOfWeeks; i++) {
-            console.log(0);
-            this.schemaWeeks.push(this._dateService.getNumWeeksAfterCurrentWeek(i));
-            console.log(this.schemaWeeks);
+            this.schemaWeeks.push(this._dateService.getNumWeeksAfterDate(i));
         }
     };
-    SchemaComponent.prototype.goOneWeekBack = function (weekObj) {
-        return this._dateService.getLastWeek(weekObj);
+    SchemaComponent.prototype.goNumWeeksBack = function (num, weekObj) {
+        return this._dateService.getNumWeeksBeforeDate(weekObj.week_start, num);
     };
-    SchemaComponent.prototype.goOneWeekAhead = function (weekObj) {
-        return this._dateService.getNextWeek(weekObj);
+    SchemaComponent.prototype.goNumWeeksAhead = function (num, weekObj) {
+        return this._dateService.getNumWeeksAfterDate(num, weekObj.week_start);
     };
     SchemaComponent = __decorate([
         core_1.Component({

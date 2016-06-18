@@ -25,7 +25,7 @@ export class SchemaComponent implements OnInit {
 				for (var i = 0; i < 2; i++) {
 					console.log(this.schemaWeeks[this.schemaWeeks.length -1]);
 
-					this.schemaWeeks.push(this.goOneWeekAhead(this.schemaWeeks[this.schemaWeeks.length -1 ]));
+					this.schemaWeeks.push(this.goNumWeeksAhead(1,this.schemaWeeks[this.schemaWeeks.length -1 ]));
 				}
 				console.log(this.schemaWeeks);
 			}
@@ -57,37 +57,31 @@ export class SchemaComponent implements OnInit {
 		//this._router.navigate(["Dashboard"]);
 	}
 	weekGoLeft(){
-		for (var i = 0; i < this.schemaWeeks.length; i++) {
-			for (var j = 0; j < this.schemaWeeks.length; j++) {
-				this.schemaWeeks[j] = this.goOneWeekBack(this.schemaWeeks[j]);
-		
-			
-			}
+		for (var i = 0; i < this.schemaWeeks.length ; i++) {
+
+				this.schemaWeeks[i] = this.goNumWeeksBack(this.schemaWeeks.length ,this.schemaWeeks[i]);
 		}
 	}
 	weekGoRight() {
-		for (var i = 0; i < this.schemaWeeks.length; i++) {
-			for (var j = 0; j < this.schemaWeeks.length; j++) {
-				this.schemaWeeks[j] = this.goOneWeekAhead(this.schemaWeeks[j]);
-		
-			
-			}
+		for (var i = 0; i < this.schemaWeeks.length ;  i++) {
+					this.schemaWeeks[i] = this.goNumWeeksAhead(this.schemaWeeks.length  ,this.schemaWeeks[i]);
 		}
 	}
-	setWeeks(numberOfWeeks){
+	setWeeks(numberOfWeeks) {
 		for (var i = 0; i < numberOfWeeks; i++) {
-			console.log(0);
-			this.schemaWeeks.push(this._dateService.getNumWeeksAfterCurrentWeek(i));
-			console.log(this.schemaWeeks);
+
+
+			this.schemaWeeks.push(this._dateService.getNumWeeksAfterDate(i));
+		
 		}
 	}
-	goOneWeekBack(weekObj) {
+	goNumWeeksBack(num , weekObj) {
 
-		return this._dateService.getLastWeek(weekObj)
+		return this._dateService.getNumWeeksBeforeDate(weekObj.week_start, num);
 
 	}
-	goOneWeekAhead(weekObj){
-		return this._dateService.getNextWeek(weekObj);
+	goNumWeeksAhead(num, weekObj) {
+		return this._dateService.getNumWeeksAfterDate(num, weekObj.week_start);
 	}
 
 }
