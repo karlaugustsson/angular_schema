@@ -61,6 +61,10 @@ var SchemaService = (function () {
             });
         });
     };
+    SchemaService.prototype.getSchemaBlocks = function (schemaID, start_date, end_date, userId) {
+        if (userId === void 0) { userId = null; }
+        console.log(schemaID, start_date, end_date);
+    };
     SchemaService.prototype.handleError = function (response) {
         return Promise.reject(response);
     };

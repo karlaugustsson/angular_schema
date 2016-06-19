@@ -11,8 +11,9 @@ export class SchemaComponent implements OnInit {
 	schemaId: string = null;
 	schema;
 	schemaWeeks: Array<any> = [];
-	showNumWeeks = 2;
+	showNumWeeks:number = 2;
 	less: boolean = true;
+	schemaBlocks:Array<any> = [];
 
 	changeNumberOfWeeks(less: boolean) {
 		this.less = less;
@@ -35,6 +36,7 @@ export class SchemaComponent implements OnInit {
 	ngOnInit(){
 		this.getSchema();
 		this.setWeeks(this.showNumWeeks);
+		this.getSchemaBlocks();
 	}
 	constructor(private router_params:RouteParams,private _router:Router ,private  _schemaService:SchemaService , private _dateService:DateService){
 
@@ -82,6 +84,11 @@ export class SchemaComponent implements OnInit {
 	}
 	goNumWeeksAhead(num, weekObj) {
 		return this._dateService.getNumWeeksAfterDate(num, weekObj.week_start);
+	}
+	getSchemaBlocks(){
+		for (var i = 0; i <= this.schemaWeeks.length -1; i++) {
+			this.schemaBlocks.push(this._schemaService.getSchemaBlocks(this.schemaId,this.schemaWeeks[i].week_start,this.schemaWeeks[i].week_end ));
+		}
 	}
 
 }

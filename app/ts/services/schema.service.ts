@@ -66,6 +66,9 @@ export class SchemaService {
 			});
 		});
 	}
+	getSchemaBlocks(schemaID:number,start_date:Date,end_date:Date , userId:number= null){
+		console.log(schemaID, start_date, end_date);
+	}
 
 	handleError(response) {
 	

@@ -22,6 +22,7 @@ var SchemaComponent = (function () {
         this.schemaWeeks = [];
         this.showNumWeeks = 2;
         this.less = true;
+        this.schemaBlocks = [];
         this.schemaId = this.router_params.get("id");
         if (!this.schemaId) {
             this._router.navigate(["DashBoard"]);
@@ -47,6 +48,7 @@ var SchemaComponent = (function () {
     SchemaComponent.prototype.ngOnInit = function () {
         this.getSchema();
         this.setWeeks(this.showNumWeeks);
+        this.getSchemaBlocks();
     };
     SchemaComponent.prototype.getSchema = function () {
         var _this = this;
@@ -81,6 +83,11 @@ var SchemaComponent = (function () {
     };
     SchemaComponent.prototype.goNumWeeksAhead = function (num, weekObj) {
         return this._dateService.getNumWeeksAfterDate(num, weekObj.week_start);
+    };
+    SchemaComponent.prototype.getSchemaBlocks = function () {
+        for (var i = 0; i <= this.schemaWeeks.length - 1; i++) {
+            this.schemaBlocks.push(this._schemaService.getSchemaBlocks(this.schemaId, this.schemaWeeks[i].week_start, this.schemaWeeks[i].week_end));
+        }
     };
     SchemaComponent = __decorate([
         core_1.Component({
