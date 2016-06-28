@@ -22,7 +22,7 @@ export class LoginComponent{
 		this.error_messages = null;
 	
 			this.submitted = true;
-			this._loginService.authorize(this.user.email, this.user.password).then(errorResponse => this.handle_login_response(errorResponse));
+			this._loginService.authorize(this.user.email, this.user.password).subscribe(errorResponse => this.handle_login_response(errorResponse));
 	}
 	handle_login_response(loginResponse){
 		if(!loginResponse){

@@ -10,22 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var http_1 = require('@angular/http');
-require('rxjs/add/observable/throw');
-require('rxjs/add/operator/toPromise');
-require('rxjs/add/operator/catch');
-require('rxjs/add/operator/debounceTime');
-require('rxjs/add/operator/distinctUntilChanged');
 require('rxjs/add/operator/map');
-require('rxjs/add/operator/switchMap');
 var HttpService = (function () {
     function HttpService(_http) {
         this._http = _http;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
-    HttpService.prototype.handleError = function (error) {
-        console.log(error);
-        return Promise.reject(error.json() || error);
-    };
     HttpService.prototype.getRequest = function (urlName, additional_headers) {
         var _this = this;
         if (additional_headers === void 0) { additional_headers = null; }
@@ -39,7 +29,7 @@ var HttpService = (function () {
                 }
             });
         }
-        return this._http.get(urlName, { headers: this.headers }).toPromise().then(function (response) { return response.json(); }).catch(this.handleError);
+        return this._http.get(urlName, { headers: this.headers }).map(function (response) { return response.json(); });
     };
     HttpService.prototype.PostRequest = function (urlName, body, additional_headers) {
         var _this = this;
@@ -49,7 +39,7 @@ var HttpService = (function () {
                 _this.headers.append(header.key, header.value);
             });
         }
-        return this._http.post(urlName, body, { headers: this.headers }).toPromise().then(function (response) { return response.json(); }).catch(this.handleError);
+        return this._http.post(urlName, body, { headers: this.headers }).map(function (response) { return response.json(); });
     };
     HttpService = __decorate([
         core_1.Injectable(), 

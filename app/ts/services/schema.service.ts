@@ -15,8 +15,8 @@ export class SchemaService {
 
 	getUserSubscribedSchemas() {
 		return this._apiService.getApiRoute("userSchemas").then(route => {
-			return this._loginService.get_authtoken().then(token=>{
-				return this._httpService.getRequest(route.server_url + route.url, [token]).then(response =>  response, error => this.handleError(error) );
+			return this._loginService.get_authtoken().subscribe(token=>{
+				return this._httpService.getRequest(route.server_url + route.url, [token]);
 			});
 		});
 
@@ -24,8 +24,8 @@ export class SchemaService {
 
 	getSubscribableSchemas(){
 		return this._apiService.getApiRoute("userSubscribeableSchemas").then(route => {
-			return this._loginService.get_authtoken().then(token=>{
-				return this._httpService.getRequest(route.server_url + route.url, [token]).then(response =>  response, error => this.handleError(error) );
+			return this._loginService.get_authtoken().subscribe(token=>{
+				return this._httpService.getRequest(route.server_url + route.url, [token]);
 			});
 		});
 	}
@@ -35,9 +35,9 @@ export class SchemaService {
 		return this._apiService.getApiRoute("UserSubscribeToSchema").then(route => {
 			var url = route.url.replace("{id}", schemaId);
 	
-			return this._loginService.get_authtoken().then(token=>{
+			return this._loginService.get_authtoken().subscribe(token=>{
 	
-				return this._httpService.getRequest(route.server_url + url, [token]).then(response => response, error => this.handleError(error) );
+				return this._httpService.getRequest(route.server_url + url, [token]);
 			});
 		});
 
@@ -45,29 +45,54 @@ export class SchemaService {
 
 	unsubscribeToSchema(schemaId){
 		
-		return this._apiService.getApiRoute("UserUnsubscribeToSchema").then(route => {
+		return this._apiService.getApiRoute("UserUnsubscribeToSchema").then((route) => {
 	
 			var url = route.url.replace("{id}", schemaId);
 
-			return this._loginService.get_authtoken().then(token=>{
+			return this._loginService.get_authtoken().subscribe((token)=>{
 		
-				return this._httpService.getRequest(route.server_url + url, [token]).then(response => response, error => this.handleError(error) );
+			return this._httpService.getRequest(route.server_url + url, [token])
 			});
 		});
 	}
 	getSchema(schemaId){
 
-		return this._apiService.getApiRoute("Schema").then(route => {
-	
-			var url = route.url.replace("{id}", schemaId);
-				return this._loginService.get_authtoken().then(token=>{
-		
-				return this._httpService.getRequest(route.server_url + url, [token]).then(response => response, error => this.handleError(error) );
+		return new Observable(observer => {
+			
+			this._apiService.getApiRoute("Schema").then(route => {
+				var url = route.url.replace("{id}", schemaId);
+
+				this._loginService.get_authtoken().subscribe(token => {
+			
+
+					this._httpService.getRequest(route.server_url + url, [token]).subscribe(response => observer.next(response));
+				});
 			});
+
 		});
 	}
-	getSchemaBlocks(schemaID:number,start_date:Date,end_date:Date , userId:number= null){
-		console.log(schemaID, start_date, end_date);
+	getSchemaBlocks(schemaID,start_date,end_date, userId:number = null){
+		
+		return new Observable(observer => {
+			this._apiService.getApiRoute("SchemaBlocks").then(route => {
+				let start_d = start_date.toString("yyyy-MM-dd");
+				let end_d = end_date.toString("yyyy-MM-dd")
+				let url = route.url.replace("{schema_id}", schemaID);
+				url = url.replace("{start_date}", start_d);
+				url = url.replace("{end_date}", end_d);
+				if (userId) {
+					url = url.replace("{user_id}", userId.toString());
+				} else {
+					url = url.replace("{user_id}", "");
+				}
+
+				this._loginService.get_authtoken().subscribe(token => {
+					
+					this._httpService.getRequest(route.server_url + url, [token]).subscribe(response => observer.next(response));
+				});
+			});
+		});
+		
 	}
 
 	handleError(response) {

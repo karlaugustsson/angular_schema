@@ -25,7 +25,7 @@ var LoginComponent = (function () {
         var _this = this;
         this.error_messages = null;
         this.submitted = true;
-        this._loginService.authorize(this.user.email, this.user.password).then(function (errorResponse) { return _this.handle_login_response(errorResponse); });
+        this._loginService.authorize(this.user.email, this.user.password).subscribe(function (errorResponse) { return _this.handle_login_response(errorResponse); });
     };
     LoginComponent.prototype.handle_login_response = function (loginResponse) {
         if (!loginResponse) {

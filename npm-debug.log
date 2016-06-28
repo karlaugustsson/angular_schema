@@ -7,7 +7,7 @@
 6 silly lifecycle chat@1.0.0~prestart: no script for prestart, continuing
 7 info lifecycle chat@1.0.0~start: chat@1.0.0
 8 verbose lifecycle chat@1.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle chat@1.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Applications/MAMP/htdocs/schema_angular/node_modules/.bin:/usr/local/bin:/usr/local/php5/bin:/Users/karlaugustsson/.rbenv/shims:/usr/local/mysql/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/karlaugustsson/.composer/vendor/bin:/Applications/DevDesktop/drush
+9 verbose lifecycle chat@1.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Applications/MAMP/htdocs/schema_angular/node_modules/.bin:/usr/local/bin:/Users/karlaugustsson/.composer/vendor/bin:/usr/local/php5/bin:/Users/karlaugustsson/.rbenv/shims:/usr/local/mysql/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/karlaugustsson/.composer/vendor/bin:/Applications/DevDesktop/drush
 10 verbose lifecycle chat@1.0.0~start: CWD: /Applications/MAMP/htdocs/schema_angular
 11 silly lifecycle chat@1.0.0~start: Args: [ '-c', 'tsc && concurrently "npm run tsc:w" "npm run lite"' ]
 12 silly lifecycle chat@1.0.0~start: Returned: code: 2  signal: null

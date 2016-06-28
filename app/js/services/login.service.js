@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var http_service_1 = require("./http.service");
 var router_deprecated_1 = require('@angular/router-deprecated');
+var Rx_1 = require('rxjs/Rx');
 var api_service_1 = require("./api.service");
 var LoginService = (function () {
     function LoginService(_http, _router, api_service) {
@@ -20,9 +21,9 @@ var LoginService = (function () {
         this.api_service = api_service;
         this.email = "karl.augustsson@gmail.com";
         this.password = "password";
+        this.key = {};
         this.authorized = false;
         this.api_service.getApiRoute("Authorize").then(function (route) { return _this.login_url = route.server_url + route.url; });
-        setTimeout(function () { }, 2000);
     }
     LoginService.prototype.authorize = function (email, password) {
         var _this = this;
@@ -33,7 +34,10 @@ var LoginService = (function () {
             password = this.password;
         }
         var body = JSON.stringify({ 'email': email, "password": password });
-        return this._http.PostRequest(this.login_url, body).then(function (data) { return _this.handleSuccess(data, email, password); });
+        return new Rx_1.Observable(function (observer) {
+            console.log(observer);
+            _this._http.PostRequest(_this.login_url, body).subscribe(function (response) { return observer.next(_this.handleSuccess(response, email, password)); });
+        });
     };
     LoginService.prototype.get_authtoken = function () {
         this.isAuthorized();
@@ -45,7 +49,6 @@ var LoginService = (function () {
         }
     };
     LoginService.prototype.handleError = function (error) {
-        console.log(error);
         if (error._body == undefined) {
             return;
         }
@@ -57,6 +60,16 @@ var LoginService = (function () {
         this.password = password;
         this.authorized = true;
         return { key: "Authorization", value: "Bearer " + data.token };
+    };
+    LoginService.prototype.getAuthUser = function () {
+        var _this = this;
+        return new Rx_1.Observable(function (observer) {
+            _this.api_service.getApiRoute("AuthUser").then(function (route) {
+                _this.get_authtoken().subscribe(function (token) {
+                    _this._http.getRequest(route.server_url + route.url, [token]).subscribe(function (response) { return observer.next(response); });
+                });
+            });
+        });
     };
     LoginService = __decorate([
         core_1.Injectable(), 

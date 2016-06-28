@@ -12,17 +12,20 @@ var core_1 = require("@angular/core");
 var router_deprecated_1 = require('@angular/router-deprecated');
 var schema_service_1 = require("../services/schema.service");
 var date_service_1 = require("../services/date.service");
+var login_service_1 = require("../services/login.service");
 var SchemaComponent = (function () {
-    function SchemaComponent(router_params, _router, _schemaService, _dateService) {
+    function SchemaComponent(router_params, _router, _schemaService, _dateService, _loginService) {
         this.router_params = router_params;
         this._router = _router;
         this._schemaService = _schemaService;
         this._dateService = _dateService;
+        this._loginService = _loginService;
         this.schemaId = null;
         this.schemaWeeks = [];
         this.showNumWeeks = 2;
         this.less = true;
         this.schemaBlocks = [];
+        this.auth_user = null;
         this.schemaId = this.router_params.get("id");
         if (!this.schemaId) {
             this._router.navigate(["DashBoard"]);
@@ -38,25 +41,23 @@ var SchemaComponent = (function () {
         else {
             if (this.schemaWeeks.length == 2) {
                 for (var i = 0; i < 2; i++) {
-                    console.log(this.schemaWeeks[this.schemaWeeks.length - 1]);
                     this.schemaWeeks.push(this.goNumWeeksAhead(1, this.schemaWeeks[this.schemaWeeks.length - 1]));
                 }
-                console.log(this.schemaWeeks);
             }
         }
     };
     SchemaComponent.prototype.ngOnInit = function () {
         this.getSchema();
         this.setWeeks(this.showNumWeeks);
-        this.getSchemaBlocks();
+        this.getUserSchemas();
     };
     SchemaComponent.prototype.getSchema = function () {
         var _this = this;
-        this._schemaService.getSchema(this.schemaId).then(function (response) { _this.handleSucces(response); }, function (response) { _this.handleError(response); });
+        this._schemaService.getSchema(this.schemaId).subscribe(function (response) { return _this.schema = response; });
     };
-    SchemaComponent.prototype.handleSucces = function (response) {
-        console.log(response);
-        this.schema = response;
+    SchemaComponent.prototype.getUserSchemas = function () {
+        var _this = this;
+        this._loginService.getAuthUser().subscribe(function (response) { _this.auth_user = response; _this.getSchemaBlocks(); });
     };
     SchemaComponent.prototype.handleError = function (response) {
         console.log(response);
@@ -76,7 +77,6 @@ var SchemaComponent = (function () {
         for (var i = 0; i < numberOfWeeks; i++) {
             this.schemaWeeks.push(this._dateService.getNumWeeksAfterDate(i));
         }
-        console.log(this.schemaWeeks);
     };
     SchemaComponent.prototype.goNumWeeksBack = function (num, weekObj) {
         return this._dateService.getNumWeeksBeforeDate(num, weekObj.week_start);
@@ -85,8 +85,10 @@ var SchemaComponent = (function () {
         return this._dateService.getNumWeeksAfterDate(num, weekObj.week_start);
     };
     SchemaComponent.prototype.getSchemaBlocks = function () {
+        var _this = this;
+        console.log("hepp");
         for (var i = 0; i <= this.schemaWeeks.length - 1; i++) {
-            this.schemaBlocks.push(this._schemaService.getSchemaBlocks(this.schemaId, this.schemaWeeks[i].week_start, this.schemaWeeks[i].week_end));
+            this._schemaService.getSchemaBlocks(this.schemaId, this.schemaWeeks[i].week_start, this.schemaWeeks[i].week_end, this.auth_user.id).subscribe(function (response) { _this.schemaBlocks.push(response); });
         }
     };
     SchemaComponent = __decorate([
@@ -95,7 +97,7 @@ var SchemaComponent = (function () {
             templateUrl: "app/html/schema.component.html",
             providers: [date_service_1.DateService]
         }), 
-        __metadata('design:paramtypes', [router_deprecated_1.RouteParams, router_deprecated_1.Router, schema_service_1.SchemaService, date_service_1.DateService])
+        __metadata('design:paramtypes', [router_deprecated_1.RouteParams, router_deprecated_1.Router, schema_service_1.SchemaService, date_service_1.DateService, login_service_1.LoginService])
     ], SchemaComponent);
     return SchemaComponent;
 }());
