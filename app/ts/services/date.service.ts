@@ -21,6 +21,10 @@ export class DateService {
 
 
 	}
+	public makeDateObject(datestring){
+
+		return new Date(datestring);
+	}
 	private getEndOfWeek(date = false) {
 	
 		let sunday = null;

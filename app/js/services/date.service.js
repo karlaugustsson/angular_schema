@@ -27,6 +27,9 @@ var DateService = (function () {
         }
         return monday.last().mon();
     };
+    DateService.prototype.makeDateObject = function (datestring) {
+        return new Date(datestring);
+    };
     DateService.prototype.getEndOfWeek = function (date) {
         if (date === void 0) { date = false; }
         var sunday = null;

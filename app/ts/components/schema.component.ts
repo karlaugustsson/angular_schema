@@ -68,11 +68,13 @@ export class SchemaComponent implements OnInit {
 
 		this.schemaWeeks[i] = this.goNumWeeksBack(this.schemaWeeks.length ,this.schemaWeeks[i]);
 		}
+		this.getSchemaBlocks();
 	}
 	weekGoRight() {
 		for (var i = 0; i < this.schemaWeeks.length ;  i++) {
 			this.schemaWeeks[i] = this.goNumWeeksAhead(this.schemaWeeks.length  ,this.schemaWeeks[i]);
 		}
+		this.getSchemaBlocks();
 	}
 	setWeeks(numberOfWeeks) {
 		for (var i = 0; i < numberOfWeeks; i++) {
@@ -80,6 +82,7 @@ export class SchemaComponent implements OnInit {
 			this.schemaWeeks.push(this._dateService.getNumWeeksAfterDate(i));
 		
 		}
+		console.log(this.schemaWeeks);
 	
 	}
 	goNumWeeksBack(num , weekObj) {
@@ -91,13 +94,24 @@ export class SchemaComponent implements OnInit {
 		return this._dateService.getNumWeeksAfterDate(num, weekObj.week_start);
 	}
 	getSchemaBlocks(){
-console.log("hepp");
+		this.schemaBlocks = [];
 		for (var i = 0; i <= this.schemaWeeks.length -1; i++) {
 			
-			this._schemaService.getSchemaBlocks(this.schemaId,this.schemaWeeks[i].week_start,this.schemaWeeks[i].week_end , this.auth_user.id ).subscribe(response => {this.schemaBlocks.push(response)});
+			this._schemaService.getSchemaBlocks(this.schemaId, this.schemaWeeks[i].week_start, this.schemaWeeks[i].week_end, this.auth_user.id).subscribe(response => { this.schemaBlocks.push(this.makeDateObjects(response))});
 		}
-	
-		
+
+
+	}
+	makeDateObjects(serverResponse){
+		console.log(serverResponse);
+		serverResponse.map((block)=>{
+			block.created_at = this._dateService.makeDateObject(block.created_at);
+			block.start_time = this._dateService.makeDateObject(block.start_time);
+			block.end_time = this._dateService.makeDateObject(block.end_time);
+			block.updated_at = this._dateService.makeDateObject(block.updated_at);
+			return block;
+		});
+		console.log(serverResponse);
 	}
 
 }

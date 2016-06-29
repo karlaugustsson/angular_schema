@@ -30,7 +30,7 @@ export class LoginService{
 
 		let body = JSON.stringify({ 'email': email, "password": password });
 		return new Observable(observer => {
-			console.log(observer);
+		
 			this._http.PostRequest(this.login_url, body).subscribe(response => observer.next(this.handleSuccess(response, email, password)));
 		});
 

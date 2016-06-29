@@ -41,6 +41,11 @@
 							<th *ngFor="let day of schemaWeek.days" [ngClass]="{active:day.is_today}">{{day.label}}</th>
 							</tr>			
 						</thead>
+						<tbody>
+							<tr>
+								<td *ngFor="let day of schemaWeek.days" [ngClass]="{active:day.is_today}"></td>
+							</tr>
+						</tbody>
 						
 					</table>
 				</div>

@@ -35,7 +35,6 @@ var LoginService = (function () {
         }
         var body = JSON.stringify({ 'email': email, "password": password });
         return new Rx_1.Observable(function (observer) {
-            console.log(observer);
             _this._http.PostRequest(_this.login_url, body).subscribe(function (response) { return observer.next(_this.handleSuccess(response, email, password)); });
         });
     };

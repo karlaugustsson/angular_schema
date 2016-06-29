@@ -67,16 +67,19 @@ var SchemaComponent = (function () {
         for (var i = 0; i < this.schemaWeeks.length; i++) {
             this.schemaWeeks[i] = this.goNumWeeksBack(this.schemaWeeks.length, this.schemaWeeks[i]);
         }
+        this.getSchemaBlocks();
     };
     SchemaComponent.prototype.weekGoRight = function () {
         for (var i = 0; i < this.schemaWeeks.length; i++) {
             this.schemaWeeks[i] = this.goNumWeeksAhead(this.schemaWeeks.length, this.schemaWeeks[i]);
         }
+        this.getSchemaBlocks();
     };
     SchemaComponent.prototype.setWeeks = function (numberOfWeeks) {
         for (var i = 0; i < numberOfWeeks; i++) {
             this.schemaWeeks.push(this._dateService.getNumWeeksAfterDate(i));
         }
+        console.log(this.schemaWeeks);
     };
     SchemaComponent.prototype.goNumWeeksBack = function (num, weekObj) {
         return this._dateService.getNumWeeksBeforeDate(num, weekObj.week_start);
@@ -86,10 +89,22 @@ var SchemaComponent = (function () {
     };
     SchemaComponent.prototype.getSchemaBlocks = function () {
         var _this = this;
-        console.log("hepp");
+        this.schemaBlocks = [];
         for (var i = 0; i <= this.schemaWeeks.length - 1; i++) {
-            this._schemaService.getSchemaBlocks(this.schemaId, this.schemaWeeks[i].week_start, this.schemaWeeks[i].week_end, this.auth_user.id).subscribe(function (response) { _this.schemaBlocks.push(response); });
+            this._schemaService.getSchemaBlocks(this.schemaId, this.schemaWeeks[i].week_start, this.schemaWeeks[i].week_end, this.auth_user.id).subscribe(function (response) { _this.schemaBlocks.push(_this.makeDateObjects(response)); });
         }
+    };
+    SchemaComponent.prototype.makeDateObjects = function (serverResponse) {
+        var _this = this;
+        console.log(serverResponse);
+        serverResponse.map(function (block) {
+            block.created_at = _this._dateService.makeDateObject(block.created_at);
+            block.start_time = _this._dateService.makeDateObject(block.start_time);
+            block.end_time = _this._dateService.makeDateObject(block.end_time);
+            block.updated_at = _this._dateService.makeDateObject(block.updated_at);
+            return block;
+        });
+        console.log(serverResponse);
     };
     SchemaComponent = __decorate([
         core_1.Component({
